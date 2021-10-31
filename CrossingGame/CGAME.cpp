@@ -334,6 +334,7 @@ void CGAME::saveGame() {
 		wcout << "Can not open the file!";
 	else {
 		//Luu so luong doi tuong max trong mot level
+
 		int listObjects = cg->getNumObjects();
 		fout << listObjects << " ";
 
@@ -377,6 +378,8 @@ void CGAME::loadGame() {
 	}
 	else {
 		//Lay so luong object trong mot game
+		
+
 		int numObjects;
 		fin >> numObjects; this->setNumbetObjects(numObjects);
 

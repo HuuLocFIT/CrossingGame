@@ -99,29 +99,32 @@ void CDRAW::printHomePage(int x, int y, int w, int h) {
 	printBox(x, y, w, h);
 }
 void CDRAW::printAboutUs() {
-	SetColor(10);
-	printBox(47, 21, 28, 2);
-	GotoXY(53, 22);  wcout << "Press Esc to Exit";
+	SetColor(_LIGHTGREEN);
+	int tmp = 70;
+	printBox(tmp+3, 21, 28, 2);
+	GotoXY(tmp, 2);  wcout << L"              .-\"\"\"-.";
+	GotoXY(tmp, 3);  wcout << L"             / .===. \\";
+	GotoXY(tmp, 4);  wcout << L"             \\/ 6 6 \\/";
+	GotoXY(tmp, 5);  wcout << L"             ( \\___/ )";
+	GotoXY(tmp, 6);  wcout << L" ________ooo__\\_____/____________";
+	GotoXY(tmp, 7);  wcout << L" /                                \\";
+	GotoXY(tmp, 8);  wcout << L"| MEMBERS                          |";
+	GotoXY(tmp, 9);  wcout << L"| 20127212 Nguyen Truong Minh Khoi |";
+	GotoXY(tmp, 10); wcout << L"| 20127233 Huynh The Long          |";
+	GotoXY(tmp, 11); wcout << L"| 20127459 Le Quoc Dat             |";
+	GotoXY(tmp, 12); wcout << L"| 20127522 Nguyen Huu Khai         |";
+	GotoXY(tmp, 13); wcout << L"| 20127551 Nguyen Huu Loc          |";
+	GotoXY(tmp, 14); wcout << L"\\_____________________ooo________/";
+	GotoXY(tmp, 15); wcout << L"              |  |  |";
+	GotoXY(tmp, 16); wcout << L"              |_ | _|";
+	GotoXY(tmp, 17); wcout << L"              |  |  |";
+	GotoXY(tmp, 18); wcout << L"              |__|__|";
+	GotoXY(tmp, 18); wcout << L"              /-'Y'-\\";
+	GotoXY(tmp, 19); wcout << L"             (__/ \\__)";
+	GotoXY(tmp+6, 22);  wcout << "Press Esc to Exit";
 
+	
 	while (1) {
-		SetColor(6);
-		GotoXY(58, 8); wcout << "MEMBERS";
-		GotoXY(50, 10); wcout << "MSSV";
-		GotoXY(48, 11); wcout << "20127214";
-		GotoXY(48, 12); wcout << "20127233";
-		GotoXY(48, 13); wcout << "20127459";
-		GotoXY(48, 14); wcout << "20127522";
-		GotoXY(48, 15); wcout << "20127551";
-		GotoXY(63, 10); wcout << "FULLNAME";
-		GotoXY(60, 11); wcout << "Ng~ Truong M.Khoi";
-		GotoXY(60, 12); wcout << "Huynh The Long";
-		GotoXY(60, 13); wcout << "Le Quoc Dat";
-		GotoXY(60, 14); wcout << "Nguyen Huu Khai";
-		GotoXY(60, 15); wcout << "Nguyen Huu Loc";
-
-		SetColor(4);
-		printBox(45, 6, 32, 11);
-
 		if (_kbhit()) {
 			char press = _getch();
 			if (press == 27) return;
@@ -129,15 +132,25 @@ void CDRAW::printAboutUs() {
 	}
 }
 void CDRAW::printInstructions() {
-	SetColor(10);
-	printBox(47, 21, 28, 2);
-	GotoXY(53, 22);  wcout << "Press Esc to Exit";
+	SetColor(_LIGHTBLUE);
+	int tmp = 50;
+	printBox(tmp+30, 21, 28, 2);
+	GotoXY(tmp, 5); wcout << L" ____________________________________________________________________________________";
+	GotoXY(tmp, 6); wcout << L"/\\                                                                                   \\";
+	GotoXY(tmp, 7); wcout << L"\\_| Huong dan                                                                         |"; 
+	GotoXY(tmp, 8); wcout << L"   | Dung cac phim WASD hoac ↑ ← ↓ → de di chuyen                                     |";
+	GotoXY(tmp, 9); wcout << L"   | Di chuyen len dau de qua level tiep theo                                         |";
+	GotoXY(tmp, 10); wcout << L"   | Tranh cac chuong ngai vat khi di chuyen                                          |";
+	GotoXY(tmp, 11); wcout << L"   | Khi den do, cac chuong ngai vat se dung lai, ban co the loi dung de choi tot hon |";
+	GotoXY(tmp, 12); wcout << L"   |   _______________________________________________________________________________|";
+	GotoXY(tmp, 13); wcout << L"   \\_/_________________________________________________________________________________/";
+
 	while (1) {
 		if (_kbhit()) {
 			char press = _getch();
 			if (press == 27) return;
 		}
-		GotoXY(51, 18); wcout << "This is instructions!";
+		GotoXY(tmp + 32, 22);  wcout << "Press Esc to Exit";
 	}
 }
 //EXIT GAME
@@ -220,13 +233,9 @@ void printPeople(int x, int y) {
 	GotoXY(x, y + 1); wcout << "/|\\";
 	GotoXY(x, y + 2); wcout << "/ \\";
 }
-
 void MusicCarLoading() {
 	PlaySound(TEXT("smb_world_clear.wav"), NULL, SND_SYNC);
 }
-
-
-
 void DeleteImageOld(int x, int y, int w, int h) {
 	for (int i = 0; i < h; i++) {
 		for (int j = x; j <= x + w; j++) {

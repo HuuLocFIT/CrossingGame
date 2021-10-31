@@ -6,7 +6,7 @@
 #include<iostream>
 using namespace std;
 
-#define XPEOPLE 50
+#define XPEOPLE 65
 #define YPEOPLE 33
 
 class CPEOPLE {
