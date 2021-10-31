@@ -11,10 +11,12 @@
 #define _BLACK 0
 #define _BLUE 1
 #define _GREEN 2
+#define _REDDARK 4
 #define _PINK 5
 #define _YELLOW 6
 #define _GRAY 7
 #define _LIGHTGREEN 10
+#define _LIGHTBLUE 11
 #define _RED 12
 #define _LIGHTYELLOW 14
 //Dinh nghia phim an nguoi dung
