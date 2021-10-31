@@ -35,33 +35,35 @@ CPEOPLE::~CPEOPLE() {
 //Kiểm tra có va chạm vào xe không?
 bool CPEOPLE::isImpact(const CVEHICLE* xe, int n) {
 	for (int i = 0; i < n; i++) {
-		if (mX >= xe[i].getX() && mX <= (xe[i].getX() + 11)) {
+		if (mX >= xe[i].getX() && mX <= (xe[i].getX() + 11) && (mY-1) == xe[0].getY() ) {
 			this->mState = false;
 			return true;
 		}
 	}
-	this->mState = true;
+	
 	return false;
 }
 
 //Có va chạm vào động vật không
 bool CPEOPLE::isImpact(const CANIMAL* dv, int n) {
 	for (int i = 0; i < n; i++) {
-		if (mX >= dv[i].getX() && mX <= dv[i].getX() + 11) {
+		if (mX >= dv[i].getX() && mX <= dv[i].getX() + 11 && (mY - 1) == dv[0].getY() ) {
 			this->mState = false;
 			return true;
 		}
 	}
 
-	this->mState = true;
+	
 	return false;
 }
 
 //Nếu va chạm thì trạng thái là chết
-bool CPEOPLE::isDead() {
-	if (mState == false) return true;
-	return false;
-}
+	bool CPEOPLE::isDead() {
+		if (mState == false) {
+			return true;
+		}
+		return false;
+	}
 
 //Kiểm tra người chơi đã đến đích để chuyển sang level mới
 bool CPEOPLE::isFinish() {
@@ -71,6 +73,3 @@ bool CPEOPLE::isFinish() {
 	return false;
 }
 
-void CPEOPLE::setMState(bool live) {
-	mState = live;
-}
