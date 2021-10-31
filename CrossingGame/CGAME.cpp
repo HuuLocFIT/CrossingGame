@@ -29,6 +29,26 @@ CGAME::~CGAME() {
 	level = 1;
 }
 
+void CGAME::DebugOutput() {
+	GotoXY(138, 33); wcout << "Level " << cg->level;
+	GotoXY(138, 34); wcout << "People Poss x: " << cg->cn->getX() << " y: " << cg->cn->getY() <<" ";
+	GotoXY(138, 35); wcout << "People status: " << cg->cn->getMState();
+	
+	int oldPos;
+	for (int i = 0; i < getNumObjects(); i++) {
+		GotoXY(138, 1 + i); wcout << "Xe hoi " << i << " poss x:" << cg->axh[i].getX() << " y:" << cg->axh[i].getY();
+	}
+	for (int i = 0; i < getNumObjects(); i++) {
+		GotoXY(138,1 + getNumObjects() + i); wcout <<"Xe tai " << i << " poss x:" << cg->axt[i].getX() << " y:" << cg->axt[i].getY();
+	}
+	for (int i = 0; i < getNumObjects(); i++) {
+		GotoXY(138, 1 + getNumObjects()*2 + i); wcout << "Con doi " << i << " poss x:" << cg->ad[i].getX() << " y:" << cg->ad[i].getY();
+	}
+	for (int i = 0; i < getNumObjects(); i++) {
+		GotoXY(138, 1 + getNumObjects() * 3 + i); wcout << "Ca sau " << i << " poss x:" << cg->acs[i].getX() << " y: " << cg->acs[i].getY();
+	}
+}
+
 void CGAME::setLevel(int score) {
 	level = score;
 }
@@ -96,7 +116,8 @@ void CGAME::resetGame() {
 }
 
 //Vẽ đường
-void CGAME::drawGame() {	
+void CGAME::drawGame() {		
+	CDRAW cdraw;
 	for (int i = 0; i <= HEIGHTROAD * 6; i += HEIGHTROAD) {
 		for (int j = 0; j < WIDTHROAD; j++) {
 			GotoXY(j, i); wcout << L'─';
@@ -107,6 +128,12 @@ void CGAME::drawGame() {
 		GotoXY(WIDTHROAD, i); wcout << L'│';
 	}
 	GotoXY(WIDTHROAD, HEIGHTROAD * 6); wcout << L'┘';
+
+	
+	cdraw.printBox(137, 0, 40, 36);
+	
+	
+
 }
 
 //Cho xe di chuyển
@@ -200,16 +227,18 @@ CPEOPLE *CGAME::getPeople() {
 	cn->isImpact(axt, cg->getNumObjects());
 	cn->isImpact(ad, cg->getNumObjects());
 	cn->isImpact(acs, cg->getNumObjects());
+	
 	return cn;
 }
 
 void CGAME::startGame() {
+	CDRAW cdraw;
 	system("cls");
 	ShowCur(0);
-	printLoading();
+	//cdraw.printLoading(); 
 
 	system("cls");
-	SetColor(7);
+	SetColor(_GRAY);
 
 	IS_RUNNING = true;//Khởi tạo biến là true để bắt đầu thread vào trò chơi
 }
@@ -226,33 +255,33 @@ void CGAME::updatePosPeople(char MOVING) {
 	//Lấy các vị trí x cũ và y cũ để xóa ảnh đối tượng cũ in đối tượng mới
 	int xOld = cn->getX();
 	int yOld = cn->getY();
-
-	if (MOVING == 'W') {
-		DeleteImageOld(xOld, yOld, 4, 3);
+	DeleteImageOld(xOld, yOld, 4, 3);
+	if (MOVING == 'W' || MOVING == _UPkey) {
 		cn->Up(6);//Bước đi lên
 	}
-	else if (MOVING == 'S') {
-		DeleteImageOld(xOld, yOld, 4, 3);
+	else if (MOVING == 'S' || MOVING == _DOWNkey) {
 		cn->Down(6);//Bước đi xuống
 	}
-	else if (MOVING == 'A') {
-		DeleteImageOld(xOld, yOld, 4, 3);
-		cn->Left(2);//Qua trái
+	else if (MOVING == 'A' || MOVING == _LEFTkey) {
+		
+		cn->Left(3);//Qua trái
 	}
-	else if (MOVING == 'D') {
-		DeleteImageOld(xOld, yOld, 4, 3);
-		cn->Right(2);//Qua phải
+	else if (MOVING == 'D' || MOVING == _RIGHTkey) {
+		cn->Right(3);//Qua phải
 	}
 	printPeople(cn->getX() , cn->getY());//Bắt đầu in người
+	
 }
 
-
+//Ham cap nhap
 void CGAME::PlayGame() {
 	while (IS_RUNNING) {
+		cg->DebugOutput();
+		cg->updatePosPeople(MOVING);
+
 		//Kiểm tra tình trạng người chơi còn sống không?
-		if (!cg->getPeople()->isDead()) {
-			cg->updatePosPeople(MOVING);
-		}
+		/*if (!cg->getPeople()->isDead()) {*/
+		//}
 		MOVING = ' ';
 
 		//Kiểm tra người chơi đến đích chưa để qua màn mới
@@ -261,15 +290,16 @@ void CGAME::PlayGame() {
 			system("cls");
 			cg->resetGame();
 			cg->startGame();
-			
 			continue;
 		}
-
+		
 		cg->updatePosVehicle(axh, YCAR);
 		cg->updatePosAnimal(ad, YBAT);
 		cg->updatePosVehicle(axt, YTRUCK);
 		cg->updatePosAnimal(acs, YCROC);
 		cg->drawGame();
+		
+		
 
 		if(cg->getLevel() == 1)
 			Sleep(100);
@@ -337,7 +367,6 @@ void CGAME::saveGame() {
 	}
 
 }
-
 void CGAME::loadGame() {
 	string file = takeFile();
 	ifstream fin;

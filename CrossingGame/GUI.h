@@ -8,12 +8,15 @@
 
 
 //Dinh nghia mau sac
+#define _BLACK 0
 #define _BLUE 1
 #define _GREEN 2
 #define _PINK 5
 #define _YELLOW 6
+#define _GRAY 7
+#define _LIGHTGREEN 10
 #define _RED 12
-
+#define _LIGHTYELLOW 14
 //Dinh nghia phim an nguoi dung
 #define _UPkey 72
 #define _DOWNkey 80
@@ -34,12 +37,12 @@ public :
 	void printThankYou(int x, int y);
 	void printBigCar(int x, int y);
 	void printBigBird(int x, int y);
+	void printLoading();
+	void printCarLoading(int x, int y);
+	void printBox(int x, int y, int w, int h);
 	
 };
 
-void printBox(int x, int y, int w, int h);
-
-void printThankYou(int x, int y);
 
 
 
@@ -55,8 +58,6 @@ void printPeople(int x, int y);
 
 void MusicCarLoading();
 
-void printCarLoading(int x, int y);
+
 
 void DeleteImageOld(int x, int y, int w, int h);
-
-void printLoading();

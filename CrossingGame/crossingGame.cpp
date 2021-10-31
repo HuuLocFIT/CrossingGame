@@ -22,8 +22,9 @@ CGAME* cg;
 
 
 void LoadGame() {
-	SetColor(10);
-	printBox(47, 21, 28, 2);
+	CDRAW cdraw;
+	SetColor(_LIGHTGREEN);
+	cdraw.printBox(47, 21, 28, 2);
 	GotoXY(53, 22);  wcout << "Press Esc to Exit";
 	while (1) {
 		if (_kbhit()) {
@@ -35,7 +36,7 @@ void LoadGame() {
 }
 
 //Xử lí chính
-void MainProgram(int x/*, int y, int w, int h*/) {
+void MainProgram(int x) {
 
 	bool press = true;//Kiem tra nguoi dung co an phim nao chua
 	int xCur = x + 37; //Toa do x cua mui ten di chuyen tren home page
@@ -43,12 +44,12 @@ void MainProgram(int x/*, int y, int w, int h*/) {
 	char move;
 	cg = new CGAME();
 	CDRAW cdraw;
-	while (1) {
+	while (true) {
 		if (press == true) {//Neu khong co dong lenh nay mui ten se nhay lien tuc vi khi chua duoc bam no van in ra
 			//Xoa mui ten di chuyen o vi tri cu 
 			GotoXY(xCur, yOld); wcout << " ";
-			ShowCur(0);
-			SetColor(_YELLOW);
+			ShowCur(false);
+			SetColor(_LIGHTYELLOW);
 			GotoXY(x + 37, yMove); wcout << L'»'; //In mui ten moi
 			yOld = yMove;//Cap nhat lai vi tri yOld
 			press = false;
@@ -61,8 +62,10 @@ void MainProgram(int x/*, int y, int w, int h*/) {
 				press = true;
 				move = _getch();
 				if (move == _UPkey) {//Di len
-					if (yMove > 22)
+					if (yMove > 22) {
 						yMove--;
+					}
+						
 					else
 						yMove = 26;//Neu di len vuot qua lua chon thi di xuong lua chon cuoi
 				}
@@ -86,10 +89,10 @@ void MainProgram(int x/*, int y, int w, int h*/) {
 				system("cls");
 				cg->startGame();
 				cg->resetGame();
+
 				thread t1(SubThread);
-				
 				char opt;
-				while (1) {
+				while (true) {
 					opt = toupper(_getch());
 
 					if (cg->getPeople()->isDead() == false) {
@@ -112,7 +115,7 @@ void MainProgram(int x/*, int y, int w, int h*/) {
 							system("pause");
 							break;
 						}
-						else if (opt == 'W' || opt == 'A' || opt == 'D' || opt == 'S') {
+						else if (opt == 'W' || opt == 'A' || opt == 'D' || opt == 'S' || opt == _UPkey || opt == _LEFTkey || opt == _RIGHTkey || opt == _DOWNkey) {
 							MOVING = opt;
 						}
 					}
@@ -125,6 +128,7 @@ void MainProgram(int x/*, int y, int w, int h*/) {
 							cg->resetGame();
 						}
 						else {
+							
 							cg->exitGame(&t1);
 							break;
 						}
@@ -186,7 +190,7 @@ void MainProgram(int x/*, int y, int w, int h*/) {
 	}
 }
 int main() {
-	//Setting some thing
+	
 	CDRAW cdraw;
 
 	_setmode(_fileno(stdout), _O_WTEXT);
@@ -194,7 +198,6 @@ int main() {
 	FixConsoleWindow();
 
 	cdraw.printHomePage(40,6,90,25);
-
 	MainProgram(40);
 	return 0;
 }

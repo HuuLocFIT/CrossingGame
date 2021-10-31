@@ -1,6 +1,7 @@
 ﻿#include"GUI.h"
+extern int yMove;
 
-void printBox(int x, int y, int w, int h) {
+void CDRAW::printBox(int x, int y, int w, int h) {
 	//Vẽ đường ngang trên
 	GotoXY(x, y); wcout << L'┌';
 	for (int i = x + 1; i < x + w; i++) {
@@ -22,8 +23,6 @@ void printBox(int x, int y, int w, int h) {
 	GotoXY(x + w, y + h); wcout << L'┘';
 
 }
-
-//Vẽ Thank You
 void CDRAW::printThankYou(int x, int y) {
 	SetColor(10);
 	printBox(x + 35, y + 16, 28, 2);
@@ -50,8 +49,6 @@ void CDRAW::printThankYou(int x, int y) {
 		Sleep(1);
 	}
 }
-
-//====================================== Vẽ xe, động vật và người ======================================
 void CDRAW::printBigCar(int x, int y) {
 	GotoXY(x, y);     wcout << "        _______________" << endl;
 	GotoXY(x, y + 1); wcout << "       / / |  |  |  |  \\" << endl;
@@ -98,7 +95,7 @@ void CDRAW::printHomePage(int x, int y, int w, int h) {
 	SetColor(_BLUE);
 	cdraw.printBigBird(96, 18);
 
-	SetColor(5);//Mau hong
+	SetColor(_PINK);//Mau hong
 	printBox(x, y, w, h);
 }
 void CDRAW::printAboutUs() {
@@ -144,71 +141,17 @@ void CDRAW::printInstructions() {
 	}
 }
 //EXIT GAME
-//int yMove = 22;//Dùng để di chuyển trên Home page
 void CDRAW::printAgainHomePage() {
 	CDRAW cdraw;
 	system("cls");
 	ShowCur(0);
 	//printHomePage(15, 1, 90, 25); //In lại Home page
 	cdraw.printHomePage(40, 6, 90, 25);
-	SetColor(14);
-	GotoXY(77, 22); wcout << L'»';
+	SetColor(_LIGHTYELLOW);
+	GotoXY(77, yMove); wcout << L'»';
 }
-void printSmallCarLTR(int x, int y) {
-	GotoXY(x, y);     wcout << "   _____";
-	GotoXY(x, y + 1); wcout << " _/[] []\\_";
-	GotoXY(x, y + 2); wcout << "|_________|";
-	GotoXY(x, y + 3); wcout << "  O     O";
-}
-
-void printSmallCrocodile(int x, int y) {
-	GotoXY(x, y);	  wcout << "   _     _^ ";
-	GotoXY(x, y + 1); wcout << " _/'|-^-//";
-	GotoXY(x, y + 2); wcout << "|^______/";
-	GotoXY(x, y + 3); wcout << " o     o";
-}
-
-void printSmallBat(int x, int y) {
-	GotoXY(x, y);     wcout << "__       __";
-	GotoXY(x, y + 1); wcout << ") \\__V__/ (";
-	GotoXY(x, y + 2); wcout << " )__   __(";
-	GotoXY(x, y + 3); wcout << "    `-'";
-}
-
-void printSmallTruck(int x, int y) {
-	GotoXY(x, y);     wcout << L" ______";
-	GotoXY(x, y + 1); wcout << L"│      │__";
-	GotoXY(x, y + 2); wcout << L"│______│__│";
-	GotoXY(x, y + 3); wcout << L" O        O";
-}
-
-void printPeople(int x, int y) {
-	GotoXY(x, y);	  wcout << " O";
-	GotoXY(x, y + 1); wcout << "/|\\";
-	GotoXY(x, y + 2); wcout << "/ \\";
-}
-
-void MusicCarLoading() {
-	PlaySound(TEXT("smb_world_clear.wav"), NULL, SND_SYNC);
-}
-
-void printCarLoading(int x, int y) {
-	GotoXY(x, y);     wcout << "   ____";
-	GotoXY(x, y + 1); wcout << " _/_||_\\_";
-	GotoXY(x, y + 2); wcout << "|        |";
-	GotoXY(x, y + 3); wcout << "`(o)--(o)'";
-}
-
-void DeleteImageOld(int x, int y, int w, int h) {
-	for (int i = 0; i < h; i++) {
-		for (int j = x; j <= x + w; j++) {
-			GotoXY(j, y); wcout << " ";
-		}
-		y++;
-	}
-}
-
-void printLoading() {
+void CDRAW::printLoading() {
+	CDRAW cdraw;
 	system("cls");
 	ShowCur(0);
 	int percent = 10;
@@ -221,7 +164,7 @@ void printLoading() {
 		textcolor(0);
 
 		DeleteImageOld(xOld, 11, 10, 9);
-		SetColor(3); printCarLoading(i, 16);
+		SetColor(3); cdraw.printCarLoading(i, 16);
 
 		percent += 10;
 		xOld += 10;
@@ -229,15 +172,67 @@ void printLoading() {
 	}
 	musicCar.join();
 	wcout << endl << endl << endl;
-	textcolor(0);
+	textcolor(_BLACK);
 }
-
+void CDRAW::printCarLoading(int x, int y) {
+	GotoXY(x, y);     wcout << "   ____";
+	GotoXY(x, y + 1); wcout << " _/_||_\\_";
+	GotoXY(x, y + 2); wcout << "|        |";
+	GotoXY(x, y + 3); wcout << "`(o)--(o)'";
+}
 void CDRAW::printBanner(int x, int y) {
 	SetColor(_YELLOW);
-	GotoXY(x,y );       wcout << " _______  _______  _______  _______  _______    _______  _______  _______  ______";
+	GotoXY(x, y);       wcout << " _______  _______  _______  _______  _______    _______  _______  _______  ______";
 	GotoXY(x, y + 1);   wcout << "|  _____||  ___  ||  ___  ||  _____||  _____|  |  ___  ||  ___  ||  ___  ||  ___ \\";
 	GotoXY(x, y + 2);   wcout << "| |      | |___| || |   | || |_____ | |_____   | |___| || |   | || |___| || |   \\ |";
-	GotoXY(x, y + + 3); wcout << "| |_____ | |  \\ \\ | |___| | _____| | _____| |  | |  \\ \\ | |___| || |   | || |___/ |";
+	GotoXY(x, y + +3); wcout << "| |_____ | |  \\ \\ | |___| | _____| | _____| |  | |  \\ \\ | |___| || |   | || |___/ |";
 	GotoXY(x, y + 4);   wcout << "|_______||_|   \\_\\|_______||_______||_______|  |_|   \\_\\|_______||_|   |_||______/";
 
 }
+
+
+void printSmallCarLTR(int x, int y) {
+	GotoXY(x, y);     wcout << "   _____";
+	GotoXY(x, y + 1); wcout << " _/[] []\\_";
+	GotoXY(x, y + 2); wcout << "|_________|";
+	GotoXY(x, y + 3); wcout << "  O     O";
+}
+void printSmallCrocodile(int x, int y) {
+	GotoXY(x, y);	  wcout << "   _     _^ ";
+	GotoXY(x, y + 1); wcout << " _/'|-^-//";
+	GotoXY(x, y + 2); wcout << "|^______/";
+	GotoXY(x, y + 3); wcout << " o     o";
+}
+void printSmallBat(int x, int y) {
+	GotoXY(x, y);     wcout << "__       __";
+	GotoXY(x, y + 1); wcout << ") \\__V__/ (";
+	GotoXY(x, y + 2); wcout << " )__   __(";
+	GotoXY(x, y + 3); wcout << "    `-'";
+}
+void printSmallTruck(int x, int y) {
+	GotoXY(x, y);     wcout << L" ______";
+	GotoXY(x, y + 1); wcout << L"│      │__";
+	GotoXY(x, y + 2); wcout << L"│______│__│";
+	GotoXY(x, y + 3); wcout << L" O        O";
+}
+void printPeople(int x, int y) {
+	GotoXY(x, y);	  wcout << " O";
+	GotoXY(x, y + 1); wcout << "/|\\";
+	GotoXY(x, y + 2); wcout << "/ \\";
+}
+
+void MusicCarLoading() {
+	PlaySound(TEXT("smb_world_clear.wav"), NULL, SND_SYNC);
+}
+
+
+
+void DeleteImageOld(int x, int y, int w, int h) {
+	for (int i = 0; i < h; i++) {
+		for (int j = x; j <= x + w; j++) {
+			GotoXY(j, y); wcout << " ";
+		}
+		y++;
+	}
+}
+

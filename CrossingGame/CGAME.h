@@ -9,14 +9,14 @@
 #include<fstream>
 using namespace std;
 
-#define WIDTHROAD 110
+#define WIDTHROAD 130
 #define HEIGHTROAD 6
 #define LEFTROAD 0
 #define RIGHT_VEHICLE 100
 #define RIGHT_ANIMAL 96
 
 #define YCAR 8
-#define YBAT 13
+#define YBAT 14
 #define YCROC 26
 #define YTRUCK 20
 
@@ -39,7 +39,7 @@ public:
 	CGAME();
 	~CGAME();
 	void drawGame();
-
+	
 	CVEHICLE* getCars();
 	CVEHICLE* getTrucks();
 	CANIMAL* getBats();
@@ -59,7 +59,7 @@ public:
 	void resumeGame();
 	void saveGame();
 	void loadGame();
-	
+	void DebugOutput();
 	void updatePosPeople(char);
 	void updatePosVehicle(CVEHICLE*, int y);
 	void updatePosAnimal(CANIMAL*, int y);

@@ -21,6 +21,7 @@ public:
 	void Left(int x);
 	void Right(int x);
 	void Down(int y);
+
 	//Method
 	bool isImpact(const CVEHICLE*, int n);
 	bool isImpact(const CANIMAL*, int n);
@@ -28,7 +29,9 @@ public:
 	bool isFinish();
 
 
-	void setMState(bool);
+	void setMState(bool isLive) {
+		mState = isLive;
+	};
 	bool getMState() {
 		return mState;
 	}
@@ -37,6 +40,10 @@ public:
 	}
 	void setY(int y) {
 		mY = y;
+	}
+	void setXY(int x, int y) {
+		setX(x);
+		setY(y);
 	}
 	int getX() {
 		return mX;
