@@ -16,10 +16,12 @@ public:
 	CPEOPLE();
 	~CPEOPLE();
 
+	//Move
 	void Up(int y);
 	void Left(int x);
 	void Right(int x);
 	void Down(int y);
+	//Method
 	bool isImpact(const CVEHICLE*, int n);
 	bool isImpact(const CANIMAL*, int n);
 	bool isDead();

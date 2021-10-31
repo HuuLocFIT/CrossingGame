@@ -24,7 +24,7 @@ void printBox(int x, int y, int w, int h) {
 }
 
 //Vẽ Thank You
-void printThankYou(int x, int y) {
+void CDRAW::printThankYou(int x, int y) {
 	SetColor(10);
 	printBox(x + 35, y + 16, 28, 2);
 	GotoXY(x + 41, y + 17);  wcout << "Press Esc to Exit";
@@ -52,7 +52,7 @@ void printThankYou(int x, int y) {
 }
 
 //====================================== Vẽ xe, động vật và người ======================================
-void printBigCar(int x, int y) {
+void CDRAW::printBigCar(int x, int y) {
 	GotoXY(x, y);     wcout << "        _______________" << endl;
 	GotoXY(x, y + 1); wcout << "       / / |  |  |  |  \\" << endl;
 	GotoXY(x, y + 2); wcout << " _____/ /  |__|  |__|   \\" << endl;
@@ -60,8 +60,7 @@ void printBigCar(int x, int y) {
 	GotoXY(x, y + 4); wcout << "|______/  \\______/  \\___|" << endl;
 	GotoXY(x, y + 5); wcout << "       \\__/      \\__/" << endl;
 }
-
-void printBigBird(int x, int y) {
+void CDRAW::printBigBird(int x, int y) {
 	GotoXY(x, y);     wcout << "      .---.        .-----------";
 	GotoXY(x, y + 1); wcout << "     /     \\  __  /    ------";
 	GotoXY(x, y + 2); wcout << "    / /     \\(  )/    -----";
@@ -73,7 +72,88 @@ void printBigBird(int x, int y) {
 	GotoXY(x, y + 8); wcout << "           '//||\\\\`";
 	GotoXY(x, y + 9); wcout << "             ''``";
 }
+//Màn hình chính khi vào game
+void CDRAW::printHomePage(int x, int y, int w, int h) {
+	//x = 15, y = 1, w = 90, h = 25 
+	//x = 171, y = 40
+	CDRAW cdraw;
+	cdraw.printBanner(44, 7);
 
+	SetColor(_PINK);//Mau hong
+	for (int i = x; i <= x + w; i++) {
+		GotoXY(i, 13); wcout << L'-';
+	}
+
+	SetColor(_GREEN);//Mau xanh la
+	cdraw.printBigCar(45, 19);
+
+	SetColor(_RED);//Mau do
+
+	GotoXY(x + 40, y + 16); wcout << "START GAME";
+	GotoXY(x + 40, y + 17); wcout << "LOAD GAME";
+	GotoXY(x + 40, y + 18); wcout << "INSTRUCTIONS";
+	GotoXY(x + 40, y + 19); wcout << "ABOUT US";
+	GotoXY(x + 40, y + 20); wcout << "EXIT GAME";
+
+	SetColor(_BLUE);
+	cdraw.printBigBird(96, 18);
+
+	SetColor(5);//Mau hong
+	printBox(x, y, w, h);
+}
+void CDRAW::printAboutUs() {
+	SetColor(10);
+	printBox(47, 21, 28, 2);
+	GotoXY(53, 22);  wcout << "Press Esc to Exit";
+
+	while (1) {
+		SetColor(6);
+		GotoXY(58, 8); wcout << "MEMBERS";
+		GotoXY(50, 10); wcout << "MSSV";
+		GotoXY(48, 11); wcout << "20127214";
+		GotoXY(48, 12); wcout << "20127233";
+		GotoXY(48, 13); wcout << "20127459";
+		GotoXY(48, 14); wcout << "20127522";
+		GotoXY(48, 15); wcout << "20127551";
+		GotoXY(63, 10); wcout << "FULLNAME";
+		GotoXY(60, 11); wcout << "Ng~ Truong M.Khoi";
+		GotoXY(60, 12); wcout << "Huynh The Long";
+		GotoXY(60, 13); wcout << "Le Quoc Dat";
+		GotoXY(60, 14); wcout << "Nguyen Huu Khai";
+		GotoXY(60, 15); wcout << "Nguyen Huu Loc";
+
+		SetColor(4);
+		printBox(45, 6, 32, 11);
+
+		if (_kbhit()) {
+			char press = _getch();
+			if (press == 27) return;
+		}
+	}
+}
+void CDRAW::printInstructions() {
+	SetColor(10);
+	printBox(47, 21, 28, 2);
+	GotoXY(53, 22);  wcout << "Press Esc to Exit";
+	while (1) {
+		if (_kbhit()) {
+			char press = _getch();
+			if (press == 27) return;
+		}
+		GotoXY(51, 18); wcout << "This is instructions!";
+	}
+}
+//EXIT GAME
+//int yMove = 22;//Dùng để di chuyển trên Home page
+void CDRAW::printAgainHomePage() {
+	CDRAW cdraw;
+	system("cls");
+	ShowCur(0);
+	//printHomePage(15, 1, 90, 25); //In lại Home page
+	cdraw.printHomePage(40, 6, 90, 25);
+	SetColor(14);
+	GotoXY(77, 22); wcout << L'»';
+}
 void printSmallCarLTR(int x, int y) {
 	GotoXY(x, y);     wcout << "   _____";
 	GotoXY(x, y + 1); wcout << " _/[] []\\_";
@@ -152,3 +232,12 @@ void printLoading() {
 	textcolor(0);
 }
 
+void CDRAW::printBanner(int x, int y) {
+	SetColor(_YELLOW);
+	GotoXY(x,y );       wcout << " _______  _______  _______  _______  _______    _______  _______  _______  ______";
+	GotoXY(x, y + 1);   wcout << "|  _____||  ___  ||  ___  ||  _____||  _____|  |  ___  ||  ___  ||  ___  ||  ___ \\";
+	GotoXY(x, y + 2);   wcout << "| |      | |___| || |   | || |_____ | |_____   | |___| || |   | || |___| || |   \\ |";
+	GotoXY(x, y + + 3); wcout << "| |_____ | |  \\ \\ | |___| | _____| | _____| |  | |  \\ \\ | |___| || |   | || |___/ |";
+	GotoXY(x, y + 4);   wcout << "|_______||_|   \\_\\|_______||_______||_______|  |_|   \\_\\|_______||_|   |_||______/";
+
+}
