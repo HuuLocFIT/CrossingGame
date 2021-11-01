@@ -519,7 +519,7 @@ bool CGAME::controlTrafficLight(int x, int y, int mode, int timeZ) {
 	double deltaTime = 0;
 	double secondsToDelay = 2;
 	deltaTime = (((clock()) / CLOCKS_PER_SEC / timeZ % 2) + (mode))%2;
-	GotoXY(138, 22); wcout << deltaTime;
+	//GotoXY(138, 22); wcout << deltaTime;
 	int i = deltaTime;
 	
 	CDRAW cdraw;
