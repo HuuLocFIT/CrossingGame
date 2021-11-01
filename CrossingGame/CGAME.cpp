@@ -39,13 +39,13 @@ void CGAME::DebugOutput(int x) {
 		GotoXY(x, 1 + i); wcout << "Xe hoi " << i << " poss x:" << cg->axh[i].getX() << " y:" << cg->axh[i].getY();
 	}
 	for (int i = 0; i < getNumObjects(); i++) {
-		GotoXY(x,1 + getNumObjects() + i); wcout <<"Xe tai " << i << " poss x:" << cg->axt[i].getX() << " y:" << cg->axt[i].getY();
+		GotoXY(x,2 + getNumObjects() + i); wcout <<"Xe tai " << i << " poss x:" << cg->axt[i].getX() << " y:" << cg->axt[i].getY();
 	}
 	for (int i = 0; i < getNumObjects(); i++) {
-		GotoXY(x, 1 + getNumObjects()*2 + i); wcout << "Con doi " << i << " poss x:" << cg->ad[i].getX() << " y:" << cg->ad[i].getY();
+		GotoXY(x, 3 + getNumObjects()*2 + i); wcout << "Con doi " << i << " poss x:" << cg->ad[i].getX() << " y:" << cg->ad[i].getY();
 	}
 	for (int i = 0; i < getNumObjects(); i++) {
-		GotoXY(x, 1 + getNumObjects() * 3 + i); wcout << "Ca sau " << i << " poss x:" << cg->acs[i].getX() << " y: " << cg->acs[i].getY();
+		GotoXY(x, 4 + getNumObjects() * 3 + i); wcout << "Ca sau " << i << " poss x:" << cg->acs[i].getX() << " y: " << cg->acs[i].getY();
 	}
 }
 
@@ -82,6 +82,7 @@ int CGAME::getNumObjects() {
 
 //Khởi tạo giá trị mặc định cho Game
 void CGAME::resetGame() {
+
 	int maxObjectInLevel = cg->getNumObjects();//So doi tuong xe, con vat toi da trong mot tro choi
 	
 	//Khoi tao danh sach xe hoi
@@ -134,9 +135,10 @@ void CGAME::drawGame() {
 	GotoXY(138, 18); wcout << L"use      or         to move";
 	GotoXY(138, 19); wcout << L"Press: ' ' to pause game ";
 	GotoXY(138, 20); wcout << L"Press: ' ' to resume game ";
-	GotoXY(138, 21); wcout << L"Press: ' ' to load game ";
+	GotoXY(138, 21); wcout << L"Press: ' ' to save game ";
+	GotoXY(138, 22); wcout << L"Press: ' ' to load game ";
 	SetColor(_LIGHTBLUE); GotoXY(138 + 4, 18); wcout << L"WASD"; GotoXY(138 + 12, 18); wcout << L"↑ ← ↓ →";
-	GotoXY(138 + 8, 19); wcout << L"P"; GotoXY(138 + 8, 20); wcout << L"R"; GotoXY(138 + 8, 21); wcout << L"L";
+	GotoXY(138 + 8, 19); wcout << L"P"; GotoXY(138 + 8, 20); wcout << L"R"; GotoXY(138 + 8, 21); wcout << L"T"; GotoXY(138 + 8, 22); wcout << L"L";
 	SetColor(_WHITE);
 
 
@@ -262,20 +264,20 @@ void CGAME::updatePosPeople(char MOVING) {
 	int xOld = cn->getX();
 	int yOld = cn->getY();
 	DeleteImageOld(xOld, yOld, 4, 3);
-	if (MOVING == 'W' || MOVING == _UPkey) {
+	if (MOVING == 'w' || MOVING == _UPkey) {
 		cn->Up(6);//Bước đi lên
 	}
-	else if (MOVING == 'S' || MOVING == _DOWNkey) {
+	else if (MOVING == 's' || MOVING == _DOWNkey) {
 		cn->Down(6);//Bước đi xuống
 	}
-	else if (MOVING == 'A' || MOVING == _LEFTkey) {
+	else if (MOVING == 'a' || MOVING == _LEFTkey) {
 		
 		cn->Left(3);//Qua trái
 	}
-	else if (MOVING == 'D' || MOVING == _RIGHTkey) {
+	else if (MOVING == 'd' || MOVING == _RIGHTkey) {
 		cn->Right(3);//Qua phải
 	}
-	printPeople(cn->getX() , cn->getY());//Bắt đầu in người
+	cn->printPeople(cn->getX() , cn->getY());//Bắt đầu in người
 	
 }
 
@@ -293,8 +295,8 @@ void CGAME::PlayGame() {
 		
 		
 		//Kiểm tra tình trạng người chơi còn sống không?
-		/*if (!cg->getPeople()->isDead()) {*/
-		//}
+		/*if (!cg->getPeople()->isDead()) {
+		}*/
 		MOVING = ' ';
 
 		//Kiểm tra người chơi đến đích chưa để qua màn mới

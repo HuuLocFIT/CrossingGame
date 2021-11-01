@@ -30,6 +30,7 @@ void MainProgram(int x) {
 	int yOld = yMove; //Toa do y cua mui ten di chuyen tren home page
 	char move;
 	cg = new CGAME();
+	bool isPause = false; //Kiem tra nguoi dung co an Pause hay chua neu chua thi vo hieu hoa
 	CDRAW cdraw;
 	while (true) {
 		if (press == true) {//Neu khong co dong lenh nay mui ten se nhay lien tuc vi khi chua duoc bam no van in ra
@@ -80,35 +81,40 @@ void MainProgram(int x) {
 				thread t1(SubThread);
 				char opt;
 				while (true) {
-					opt = toupper(_getch());
+					opt = _getch(); //Khong dung toupper tai vi trung ma ascii voi _DOWNkey
 
 					if (cg->getPeople()->isDead() == false) {
 						if (opt == 27) {
 							cg->exitGame(&t1);
 							break;
 						}
-						else if (opt == 'P') {
+						else if (opt == 'p') {
 							cg->pauseGame();
+							isPause = true;
 						}
-						else if (opt == 'R') {
-							cg->resumeGame();
-							t1.detach();
-							t1 = thread(SubThread);
+						else if (opt == 'r' || opt == 'R') {
+							if (isPause) {
+								cg->resumeGame();
+								t1.detach();
+								t1 = thread(SubThread);
+								isPause = false;
+							}
+							
 						}
-						else if (opt == 'O') {
+						else if (opt == 't' || opt == 'T') {
 							cg->exitGame(&t1);
 							system("cls");
 							cg->saveGame();
 							system("pause");
 							break;
 						}
-						else if (opt == 'W' || opt == 'A' || opt == 'D' || opt == 'S' ) {
+						else if (opt == 'w' || opt == 'a' || opt == 'd' || opt == 's' || opt == _UPkey || opt == _DOWNkey || opt == _LEFTkey || opt == _RIGHTkey) {
 							MOVING = opt;
 						}
 					}
 					else {
 						system("cls");
-						if (opt == 'Y')
+						if (opt == 'y' || opt == 'Y')
 						{
 							cg->exitGame(&t1);
 							cg->startGame();
@@ -133,28 +139,33 @@ void MainProgram(int x) {
 
 				char opt;
 				while (1) {
-					opt = toupper(_getch());
+					opt = _getch();
 
 					if (opt == 27) {
 						cg->exitGame(&t1);
 						break;
 					}
-					else if (opt == 'P') {
+					else if (opt == 'p') {
 						cg->pauseGame();
+						isPause = true;
 					}
-					else if (opt == 'R') {
-						cg->resumeGame();
-						t1.detach();
-						t1 = thread(SubThread);
+					else if (opt == 'r' || opt == 'R') {
+						if (isPause) {
+							cg->resumeGame();
+							t1.detach();
+							t1 = thread(SubThread);
+							isPause = false;
+						}
+						
 					}
-					else if (opt == 'O') {
+					else if (opt == 't' || opt == 'T') {
 						system("cls");
 						cg->exitGame(&t1);
 						cg->saveGame();
 						system("pause");
 						break;
 					}
-					else if (opt == 'W' || opt == 'A' || opt == 'D' || opt == 'S') {
+					else if (opt == 'w' || opt == 'a' || opt == 'd' || opt == 's' || opt == _UPkey || opt == _DOWNkey || opt == _LEFTkey || opt == _RIGHTkey) {
 						MOVING = opt;
 					}
 

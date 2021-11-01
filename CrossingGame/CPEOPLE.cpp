@@ -73,3 +73,9 @@ bool CPEOPLE::isFinish() {
 	return false;
 }
 
+
+void CPEOPLE::printPeople(int x, int y) {
+		GotoXY(x, y);	  wcout << " O";
+		GotoXY(x, y + 1); wcout << "/|\\";
+		GotoXY(x, y + 2); wcout << "/ \\";
+}

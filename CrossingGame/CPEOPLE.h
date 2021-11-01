@@ -49,4 +49,6 @@ public:
 		return mY;
 	}
 
+
+	void printPeople(int x, int y);
 };
