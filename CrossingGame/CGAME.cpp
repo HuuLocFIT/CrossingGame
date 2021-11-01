@@ -1,5 +1,8 @@
 ﻿#include"CGAME.h"
 
+//Luong chuong trinh
+//PlayGame -> While (StartGame, Resest Game, Update Pos)
+
 
 bool IS_RUNNING = false;
 extern CGAME* cg;//Biến toàn cục của hàm main
@@ -46,8 +49,8 @@ void CGAME::DebugOutput(int x) {
 	}
 }
 
-void CGAME::setLevel(int score) {
-	level = score;
+void CGAME::setLevel(int level) {
+	level = level;
 }
 
 int CGAME::getLevel() {
@@ -113,7 +116,7 @@ void CGAME::resetGame() {
 }
 
 //Vẽ đường
-void CGAME::drawGame() {		
+void CGAME::drawGame() {
 	CDRAW cdraw;
 	for (int i = 0; i <= HEIGHTROAD * 6; i += HEIGHTROAD) {
 		for (int j = 0; j < WIDTHROAD; j++) {
@@ -135,9 +138,10 @@ void CGAME::drawGame() {
 	SetColor(_LIGHTBLUE); GotoXY(138 + 4, 18); wcout << L"WASD"; GotoXY(138 + 12, 18); wcout << L"↑ ← ↓ →";
 	GotoXY(138 + 8, 19); wcout << L"P"; GotoXY(138 + 8, 20); wcout << L"R"; GotoXY(138 + 8, 21); wcout << L"L";
 	SetColor(_WHITE);
-	
-}
 
+
+		
+}
 //Cho xe di chuyển
 void CGAME::updatePosVehicle(CVEHICLE *xe, int y) {
 	int flag = 0, xOld;
@@ -276,13 +280,17 @@ void CGAME::updatePosPeople(char MOVING) {
 }
 
 //Ham cap nhap
+
+
 void CGAME::PlayGame() {
 	while (IS_RUNNING) {
+		
 		CDRAW cdraw;
 		cdraw.printLevel(144, 1, cg->getLevel());
 		cg->DebugOutput(178);
 		cg->updatePosPeople(MOVING);
 
+		
 		
 		//Kiểm tra tình trạng người chơi còn sống không?
 		/*if (!cg->getPeople()->isDead()) {*/
@@ -291,17 +299,39 @@ void CGAME::PlayGame() {
 
 		//Kiểm tra người chơi đến đích chưa để qua màn mới
 		if (cg->getPeople()->isFinish()) {
-			cg->level++;
+			if (cg->getLevel() < 5) {
+				cg->level++;
+			}
 			system("cls");
 			cg->resetGame();
 			cg->startGame();
 			continue;
 		}
 		
-		cg->updatePosVehicle(axh, YCAR);
-		cg->updatePosAnimal(ad, YBAT);
-		cg->updatePosVehicle(axt, YTRUCK);
-		cg->updatePosAnimal(acs, YCROC);
+		
+		
+		if (cg->controlTrafficLight(133, 13, 0)) {
+			cg->updatePosAnimal(ad, YBAT);
+		}
+		if (cg->controlTrafficLight(133, 19, 1)) {
+			
+			cg->updatePosVehicle(axh, YCAR);
+		} 
+		if (cg->controlTrafficLight(133, 25, 0)) {
+			
+			cg->updatePosAnimal(acs, YCROC);
+		} 
+		if (cg->controlTrafficLight(133, 7, 1)) {
+			cg->updatePosVehicle(axt, YTRUCK);
+		}
+			
+			
+			
+		
+		
+		
+		
+		
 		cg->drawGame();
 		
 		
@@ -373,7 +403,9 @@ void CGAME::saveGame() {
 	}
 
 }
+
 void CGAME::loadGame() {
+
 	string file = takeFile();
 	ifstream fin;
 	fin.open(file, ios::in);
@@ -479,4 +511,31 @@ void CGAME::exitGame(thread *t1) {
 //Tiểu trình phụ in các đối tượng trong trò chơi
 void SubThread() {
 	cg->PlayGame();
+}
+
+bool CGAME::controlTrafficLight(int x, int y, int mode, int timeZ) {
+	srand(time(0));
+	clock_t TimeZero = clock(); //Start timer
+	double deltaTime = 0;
+	double secondsToDelay = 2;
+	deltaTime = (((clock()) / CLOCKS_PER_SEC / timeZ % 2) + (mode))%2;
+	GotoXY(138, 22); wcout << deltaTime;
+	int i = deltaTime;
+	
+	CDRAW cdraw;
+	GotoXY(x - 1, y); wcout << L"|  |";
+	GotoXY(x - 1, y + 2); wcout << L"|  |";
+	if (i) {
+		
+		GotoXY(x, y + 2); SetColor(_LIGHTGREEN); wcout << L"▓▓";
+		SetColor(_WHITE);
+		return true;
+	}
+	else {
+		
+		GotoXY(x, y); SetColor(_RED); wcout << L"▓▓";
+		SetColor(_WHITE);
+		return false;
+	}
+	
 }

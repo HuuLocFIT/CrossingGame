@@ -51,7 +51,8 @@ public:
 	
 	void setNumbetObjects(int num);
 	int getNumObjects();
-	void setLevel(int score);
+
+	void setLevel(int level);
 	int getLevel();
 
 	void resetGame();
@@ -66,6 +67,7 @@ public:
 	void updatePosPeople(char);
 	void updatePosVehicle(CVEHICLE*, int y);
 	void updatePosAnimal(CANIMAL*, int y);
+	bool controlTrafficLight(int x, int y, int mode = 0, int time = 4);
 };
 
 void SubThread();

@@ -162,7 +162,6 @@ void CDRAW::printAgainHomePage() {
 	CDRAW cdraw;
 	system("cls");
 	ShowCur(0);
-	//printHomePage(15, 1, 90, 25); //In lại Home page
 	cdraw.printHomePage(40, 6, 90, 25);
 	SetColor(_LIGHTYELLOW);
 	GotoXY(77, yMove); wcout << L'»';
@@ -208,30 +207,9 @@ void CDRAW::printBanner(int x, int y) {
 }
 
 
-void printSmallCarLTR(int x, int y) {
-	GotoXY(x, y);     wcout << "   _____";
-	GotoXY(x, y + 1); wcout << " _/[] []\\_";
-	GotoXY(x, y + 2); wcout << "|_________|";
-	GotoXY(x, y + 3); wcout << "  O     O";
-}
-void printSmallCrocodile(int x, int y) {
-	GotoXY(x, y);	  wcout << "   _     _^ ";
-	GotoXY(x, y + 1); wcout << " _/'|-^-//";
-	GotoXY(x, y + 2); wcout << "|^______/";
-	GotoXY(x, y + 3); wcout << " o     o";
-}
-void printSmallBat(int x, int y) {
-	GotoXY(x, y);     wcout << "__       __";
-	GotoXY(x, y + 1); wcout << ") \\__V__/ (";
-	GotoXY(x, y + 2); wcout << " )__   __(";
-	GotoXY(x, y + 3); wcout << "    `-'";
-}
-void printSmallTruck(int x, int y) {
-	GotoXY(x, y);     wcout << L" ______";
-	GotoXY(x, y + 1); wcout << L"│      │__";
-	GotoXY(x, y + 2); wcout << L"│______│__│";
-	GotoXY(x, y + 3); wcout << L" O        O";
-}
+
+
+
 void printPeople(int x, int y) {
 	GotoXY(x, y);	  wcout << " O";
 	GotoXY(x, y + 1); wcout << "/|\\";
