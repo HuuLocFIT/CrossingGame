@@ -45,7 +45,7 @@ public :
 	void printCarLoading(int x, int y);
 	void printBox(int x, int y, int w, int h);
 	void printLevel(int x, int y, int level);
-	
+
 };
 
 

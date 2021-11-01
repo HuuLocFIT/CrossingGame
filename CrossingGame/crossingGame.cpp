@@ -1,8 +1,5 @@
 ﻿#include"CGAME.h"
 
-
-
-
 int yMove = 22;//Dùng để di chuyển trên Home page
 char MOVING;
 CGAME* cg;
@@ -91,9 +88,11 @@ void MainProgram(int x) {
 							cg->pauseGame();
 						}
 						else if (opt == 'R') {
-							cg->resumeGame();
-							t1.detach();
-							t1 = thread(SubThread);
+							if (gameIsRunning() == false) {
+								cg->resumeGame();
+								t1.detach();
+								t1 = thread(SubThread);
+							}
 						}
 						else if (opt == 'O') {
 							cg->exitGame(&t1);
@@ -143,9 +142,11 @@ void MainProgram(int x) {
 						cg->pauseGame();
 					}
 					else if (opt == 'R') {
-						cg->resumeGame();
-						t1.detach();
-						t1 = thread(SubThread);
+						if (gameIsRunning() == false) {
+							cg->resumeGame();
+							t1.detach();
+							t1 = thread(SubThread);
+						}
 					}
 					else if (opt == 'O') {
 						system("cls");
