@@ -7,7 +7,26 @@
 
 using namespace std;
 
+
 void printBox(int x, int y, int w, int h);
+
+class CDRAW {
+public :
+	void printHomePage(int x, int y, int w, int h);
+	void printBanner(int x, int y);
+	void printAgainHomePage();
+	void printInstructions();
+	void printAboutUs();
+	void printThankYou(int x, int y);
+	void printBigCar(int x, int y);
+	void printBigBird(int x, int y);
+	void printLoading();
+	void printCarLoading(int x, int y);
+	void printBox(int x, int y, int w, int h);
+	void printTrafficLight(int x, int y,int );
+	
+};
+
 
 void printThankYou(int x, int y);
 

@@ -144,6 +144,7 @@
     <ClCompile Include="CGAME.cpp" />
     <ClCompile Include="CPEOPLE.cpp" />
     <ClCompile Include="crossingGame.cpp" />
+    <ClCompile Include="CTRAFFICLIGHT.cpp" />
     <ClCompile Include="CVEHICLE.cpp" />
     <ClCompile Include="GUI.cpp" />
     <ClCompile Include="Mylib.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="CANIMAL.h" />
     <ClInclude Include="CGAME.h" />
     <ClInclude Include="CPEOPLE.h" />
+    <ClInclude Include="CTRAFFICLIGHT.h" />
     <ClInclude Include="CVEHICLE.h" />
     <ClInclude Include="GUI.h" />
     <ClInclude Include="Mylib.h" />

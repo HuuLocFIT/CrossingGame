@@ -33,6 +33,8 @@ private:
 	CANIMAL* acs;
 	CPEOPLE* cn;
 
+	CTRAFFICLIGHT* trafficLight;
+
 	int level;
 	int numObjects;
 public:
@@ -46,6 +48,8 @@ public:
 	CANIMAL* getCrocodile();
 	CPEOPLE *getPeople();
 	
+	CTRAFFICLIGHT* getTrafficLight();
+
 	void setNumbetObjects(int num);
 	int getNumObjects();
 	void setLevel(int score);

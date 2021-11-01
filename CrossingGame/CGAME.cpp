@@ -63,7 +63,14 @@ int CGAME::getNumObjects() {
 //Khởi tạo giá trị mặc định cho Game
 void CGAME::resetGame() {
 	int maxObjectInLevel = cg->getNumObjects();//So doi tuong xe, con vat toi da trong mot tro choi
-	
+	// --------Tao doi tuong den giao thong------------
+	this->trafficLight = new CTRAFFICLIGHT[2];
+	this->trafficLight[0].setTrafficLight(1);
+	this->trafficLight[0].setYPosition(7);
+	this->trafficLight[1].setTrafficLight(1);
+	this->trafficLight[1].setYPosition(19);
+	//===========NHK==========================
+
 	//Khoi tao danh sach xe hoi
 	axh = new CCAR[maxObjectInLevel];
 	for (int i = 0; i < maxObjectInLevel; i++) {
@@ -97,6 +104,7 @@ void CGAME::resetGame() {
 
 //Vẽ đường
 void CGAME::drawGame() {	
+	CDRAW cdraw;
 	for (int i = 0; i <= HEIGHTROAD * 6; i += HEIGHTROAD) {
 		for (int j = 0; j < WIDTHROAD; j++) {
 			GotoXY(j, i); wcout << L'─';
@@ -107,15 +115,35 @@ void CGAME::drawGame() {
 		GotoXY(WIDTHROAD, i); wcout << L'│';
 	}
 	GotoXY(WIDTHROAD, HEIGHTROAD * 6); wcout << L'┘';
+	
+	//cdraw.printBox(137, 0, 40, 36);
+
+	CTRAFFICLIGHT* trafficLight = cg->getTrafficLight();
+	cdraw.printTrafficLight(129, 7, trafficLight[0].getTraFficLight());
+	cdraw.printTrafficLight(129, 19, trafficLight[1].getTraFficLight());
+
+	
+
 }
 
 //Cho xe di chuyển
 void CGAME::updatePosVehicle(CVEHICLE *xe, int y) {
+
+	for (int i = 0; i < 2; i++) {
+		if (trafficLight[i].getYPosition() == y - 1) {
+			if (trafficLight[i].getTraFficLight() == 0) {
+				return;
+			}
+		}
+	}
+
 	int flag = 0, xOld;
 	int maxObjectInLevel = cg->getNumObjects();//So doi tuong xe, con vat toi da trong mot tro choi
-	for (int i = 0; i < maxObjectInLevel; i++) {
+	for (int i = 0; i < maxObjectInLevel; i++) {  // Duyet qua tung chiec xe
 		int x = xe[i].getX(); 
 		int y = xe[i].getY();
+
+		
 
 		if (i == 0) {
 			DeleteImageOld(x - 2, y, 10, 4);//Xóa vị trí xe cũ để in xe mới
@@ -194,6 +222,10 @@ CANIMAL* CGAME::getCrocodile() {
 	return acs;
 }
 
+CTRAFFICLIGHT* CGAME::getTrafficLight() {
+	return trafficLight;
+}
+
 //Hàm kiểm tra có đụng vào vật cản không
 CPEOPLE *CGAME::getPeople() {
 	cn->isImpact(axh, cg->getNumObjects());
@@ -248,11 +280,25 @@ void CGAME::updatePosPeople(char MOVING) {
 
 
 void CGAME::PlayGame() {
+	int count = 0;
 	while (IS_RUNNING) {
-		//Kiểm tra tình trạng người chơi còn sống không?
-		if (!cg->getPeople()->isDead()) {
-			cg->updatePosPeople(MOVING);
+		if (count >= 80&&count<=85) {
+			trafficLight[0].setTrafficLight(0);
+			trafficLight[1].setTrafficLight(0);
+			if (count == 85) {
+				count = -1;
+			}
 		}
+		else {
+			trafficLight[0].setTrafficLight(1);
+			trafficLight[1].setTrafficLight(1);
+		}
+		//cg->DebugOutput();
+		cg->updatePosPeople(MOVING);
+
+		//Kiểm tra tình trạng người chơi còn sống không?
+		/*if (!cg->getPeople()->isDead()) {*/
+		//}
 		MOVING = ' ';
 
 		//Kiểm tra người chơi đến đích chưa để qua màn mới
@@ -282,6 +328,7 @@ void CGAME::PlayGame() {
 		else if (cg->getLevel() == 4) {
 			Sleep(30);
 		}
+		count++;
 	}
 }
 
@@ -442,4 +489,5 @@ void CGAME::exitGame(thread *t1) {
 //Tiểu trình phụ in các đối tượng trong trò chơi
 void SubThread() {
 	cg->PlayGame();
+	
 }

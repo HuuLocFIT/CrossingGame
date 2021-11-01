@@ -136,56 +136,112 @@ void MainProgram(int x/*, int y, int w, int h*/) {
 	char move;
 	cg = new CGAME();
 
-	while (1) {
-		if (press == true) {//Neu khong co dong lenh nay mui ten se nhay lien tuc vi khi chua duoc bam no van in ra
-			//Xoa mui ten di chuyen o vi tri cu 
-			GotoXY(xCur, yOld); wcout << " ";
-			ShowCur(0);
-			SetColor(14);
-			GotoXY(x + 37, yMove); wcout << L'»'; //In mui ten moi
-			yOld = yMove;//Cap nhat lai vi tri yOld
-			press = false;
-		}
-		//Kiem tra nguoi dung nhan phim de di chuyen
-		if (_kbhit()) {
-			move = _getch();
-			//============================== Di chuyen ==============================
-			if (move == -32) {
-				press = true;
-				move = _getch();
-				if (move == 72) {//Di len
-					if (yMove > 22)
-						yMove--;
-					else
-						yMove = 26;//Neu di len vuot qua lua chon thi di xuong lua chon cuoi
-				}
-				else if (move == 80) {//Di xuong
-					if (yMove < 26)
-						yMove++;
-					else
-						yMove = 22;//Neu di xuong vuot qua lua chon thi di len lua chon dau
-				}
-			}
-			//============================== Lua chon de thuc thi ==============================
-			//Exit
-			else if (move == 13 && yMove == 26) {
-				system("cls");
-				printThankYou(40, 15);
-				system("cls");
-				break;
-			}
-			//Start Game
-			else if (move == 13 && yMove == 22) {
-				system("cls");
-				cg->startGame();
-				cg->resetGame();
-				thread t1(SubThread);
-				
-				char opt;
-				while (1) {
-					opt = toupper(_getch());
 
-					if (cg->getPeople()->isDead() == false) {
+	while (1) {
+
+		CDRAW cdraw;
+		while (true) {
+
+
+			if (press == true) {//Neu khong co dong lenh nay mui ten se nhay lien tuc vi khi chua duoc bam no van in ra
+				//Xoa mui ten di chuyen o vi tri cu 
+				GotoXY(xCur, yOld); wcout << " ";
+				ShowCur(0);
+				SetColor(14);
+				GotoXY(x + 37, yMove); wcout << L'»'; //In mui ten moi
+				yOld = yMove;//Cap nhat lai vi tri yOld
+				press = false;
+			}
+			//Kiem tra nguoi dung nhan phim de di chuyen
+			if (_kbhit()) {
+				move = _getch();
+				//============================== Di chuyen ==============================
+				if (move == -32) {
+					press = true;
+					move = _getch();
+					if (move == 72) {//Di len
+						if (yMove > 22)
+							yMove--;
+						else
+							yMove = 26;//Neu di len vuot qua lua chon thi di xuong lua chon cuoi
+					}
+					else if (move == 80) {//Di xuong
+						if (yMove < 26)
+							yMove++;
+						else
+							yMove = 22;//Neu di xuong vuot qua lua chon thi di len lua chon dau
+					}
+				}
+				//============================== Lua chon de thuc thi ==============================
+				//Exit
+				else if (move == 13 && yMove == 26) {
+					system("cls");
+					printThankYou(40, 15);
+					system("cls");
+					break;
+				}
+				//Start Game
+				else if (move == 13 && yMove == 22) {
+					system("cls");
+					cg->startGame();
+					cg->resetGame();
+					thread t1(SubThread);
+
+					char opt;
+					while (1) {
+						opt = toupper(_getch());
+
+						if (cg->getPeople()->isDead() == false) {
+							if (opt == 27) {
+								cg->exitGame(&t1);
+								break;
+							}
+							else if (opt == 'P') {
+								cg->pauseGame();
+							}
+							else if (opt == 'R') {
+								cg->resumeGame();
+								t1.detach();
+								t1 = thread(SubThread);
+							}
+							else if (opt == 'O') {
+								cg->exitGame(&t1);
+								system("cls");
+								cg->saveGame();
+								system("pause");
+								break;
+							}
+							else if (opt == 'W' || opt == 'A' || opt == 'D' || opt == 'S') {
+								MOVING = opt;
+							}
+						}
+						else {
+							system("cls");
+							if (opt == 'Y')
+							{
+								cg->exitGame(&t1);
+								cg->startGame();
+								cg->resetGame();
+							}
+							else {
+								cg->exitGame(&t1);
+								break;
+							}
+						}
+					}
+					printAgainHomePage();
+				}
+				//Load Game
+				else if (move == 13 && yMove == 23) {
+					system("cls");
+					cg->resetGame();
+					cg->loadGame();
+					thread t1(SubThread);
+
+					char opt;
+					while (1) {
+						opt = toupper(_getch());
+
 						if (opt == 27) {
 							cg->exitGame(&t1);
 							break;
@@ -199,8 +255,8 @@ void MainProgram(int x/*, int y, int w, int h*/) {
 							t1 = thread(SubThread);
 						}
 						else if (opt == 'O') {
-							cg->exitGame(&t1);
 							system("cls");
+							cg->exitGame(&t1);
 							cg->saveGame();
 							system("pause");
 							break;
@@ -208,77 +264,26 @@ void MainProgram(int x/*, int y, int w, int h*/) {
 						else if (opt == 'W' || opt == 'A' || opt == 'D' || opt == 'S') {
 							MOVING = opt;
 						}
+
 					}
-					else {
-						system("cls");
-						if (opt == 'Y')
-						{
-							cg->exitGame(&t1);
-							cg->startGame();
-							cg->resetGame();
-						}
-						else {
-							cg->exitGame(&t1);
-							break;
-						}
-					}
-			
+					printAgainHomePage();
 				}
-				printAgainHomePage();
-			}
-			//Load Game
-			else if (move == 13 && yMove == 23) {
-				system("cls");
-				cg->resetGame();
-				cg->loadGame();
-				thread t1(SubThread);
-
-				char opt;
-				while (1) {
-					opt = toupper(_getch());
-
-					if (opt == 27) {
-						cg->exitGame(&t1);
-						break;
-					}
-					else if (opt == 'P') {
-						cg->pauseGame();
-					}
-					else if (opt == 'R') {
-						cg->resumeGame();
-						t1.detach();
-						t1 = thread(SubThread);
-					}
-					else if (opt == 'O') {
-						system("cls");
-						cg->exitGame(&t1);
-						cg->saveGame();
-						system("pause");
-						break;
-					}
-					else if (opt == 'W' || opt == 'A' || opt == 'D' || opt == 'S') {
-						MOVING = opt;
-					}
-
+				//Instructions
+				else if (move == 13 && yMove == 24) {
+					system("cls");
+					printInstructions();
+					printAgainHomePage();
 				}
-				printAgainHomePage();
-			}
-			//Instructions
-			else if (move == 13 && yMove == 24) {
-				system("cls");
-				printInstructions();
-				printAgainHomePage();
-			}
-			//About us
-			else if (move == 13 && yMove == 25) {
-				system("cls");
-				printAboutUs();
-				printAgainHomePage();
+				//About us
+				else if (move == 13 && yMove == 25) {
+					system("cls");
+					printAboutUs();
+					printAgainHomePage();
+				}
 			}
 		}
 	}
 }
-
 
 int main() {
 	_setmode(_fileno(stdout), _O_WTEXT);

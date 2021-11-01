@@ -74,6 +74,19 @@ void printBigBird(int x, int y) {
 	GotoXY(x, y + 9); wcout << "             ''``";
 }
 
+void CDRAW::printTrafficLight(int x, int y, int  state) {
+	if (state == 1) {
+		SetColor(1);
+		GotoXY(x, y); wcout << L"▀";
+	}
+	else {
+		SetColor(10);
+		GotoXY(x, y); wcout << L"▀";
+	}
+	SetColor(7);  
+}
+
+
 void printSmallCarLTR(int x, int y) {
 	GotoXY(x, y);     wcout << "   _____";
 	GotoXY(x, y + 1); wcout << " _/[] []\\_";
@@ -109,7 +122,7 @@ void printPeople(int x, int y) {
 }
 
 void MusicCarLoading() {
-	PlaySound(TEXT("smb_world_clear.wav"), NULL, SND_SYNC);
+	//PlaySound(TEXT("smb_world_clear.wav"), NULL, SND_SYNC);
 }
 
 void printCarLoading(int x, int y) {

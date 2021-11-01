@@ -1,6 +1,7 @@
 #pragma once
 #include<iostream>
 #include"GUI.h"
+#include"CTRAFFICLIGHT.h"
 using namespace std;
 
 class CVEHICLE {
