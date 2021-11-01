@@ -3,9 +3,6 @@
 #include"CVEHICLE.h"
 #include"GUI.h"
 
-#include<iostream>
-using namespace std;
-
 #define XPEOPLE 65
 #define YPEOPLE 33
 

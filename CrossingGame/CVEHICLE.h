@@ -1,7 +1,7 @@
+
 #pragma once
-#include<iostream>
 #include"GUI.h"
-using namespace std;
+
 
 class CVEHICLE {
 	int mX, mY;

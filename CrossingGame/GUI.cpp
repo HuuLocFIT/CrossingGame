@@ -1,4 +1,5 @@
-﻿#include"GUI.h"
+﻿#include "Mylib.h"
+#include "GUI.h"
 extern int yMove;
 
 void CDRAW::printBox(int x, int y, int w, int h) {
@@ -69,10 +70,9 @@ void CDRAW::printBigBird(int x, int y) {
 	GotoXY(x, y + 8); wcout << "           '//||\\\\`";
 	GotoXY(x, y + 9); wcout << "             ''``";
 }
+
 //Màn hình chính khi vào game
 void CDRAW::printHomePage(int x, int y, int w, int h) {
-	//x = 15, y = 1, w = 90, h = 25 
-	//x = 171, y = 40
 	CDRAW cdraw;
 	cdraw.printBanner(44, 7);
 
@@ -99,7 +99,7 @@ void CDRAW::printHomePage(int x, int y, int w, int h) {
 	printBox(x, y, w, h);
 }
 void CDRAW::printAboutUs() {
-	SetColor(_LIGHTGREEN);
+	SetColor(_LIGHTBLUE);
 	int tmp = 70;
 	printBox(tmp+3, 21, 28, 2);
 	GotoXY(tmp, 2);  wcout << L"              .-\"\"\"-.";
@@ -130,21 +130,25 @@ void CDRAW::printAboutUs() {
 			if (press == 27) return;
 		}
 	}
+	
 }
 void CDRAW::printInstructions() {
 	SetColor(_LIGHTBLUE);
 	int tmp = 50;
 	printBox(tmp+30, 21, 28, 2);
-	GotoXY(tmp, 5); wcout << L" ____________________________________________________________________________________";
-	GotoXY(tmp, 6); wcout << L"/\\                                                                                   \\";
-	GotoXY(tmp, 7); wcout << L"\\_| Huong dan                                                                         |"; 
-	GotoXY(tmp, 8); wcout << L"   | Dung cac phim WASD hoac ↑ ← ↓ → de di chuyen                                     |";
-	GotoXY(tmp, 9); wcout << L"   | Di chuyen len dau de qua level tiep theo                                         |";
+	GotoXY(tmp, 5);  wcout << L" ____________________________________________________________________________________";
+	GotoXY(tmp, 6);  wcout << L"/\\                                                                                   \\";
+	GotoXY(tmp, 7);  wcout << L"\\_| Huong dan                                                                         |"; 
+	GotoXY(tmp, 8);  wcout << L"   | Dung cac phim WASD hoac ↑ ← ↓ → de di chuyen                                     |";
+	GotoXY(tmp, 9);  wcout << L"   | Di chuyen len dau de qua level tiep theo                                         |";
 	GotoXY(tmp, 10); wcout << L"   | Tranh cac chuong ngai vat khi di chuyen                                          |";
 	GotoXY(tmp, 11); wcout << L"   | Khi den do, cac chuong ngai vat se dung lai, ban co the loi dung de choi tot hon |";
 	GotoXY(tmp, 12); wcout << L"   |   _______________________________________________________________________________|";
 	GotoXY(tmp, 13); wcout << L"   \\_/_________________________________________________________________________________/";
 
+	SetColor(_LIGHTYELLOW); GotoXY(tmp + 19, 8); wcout << L"WASD"; GotoXY(tmp + 29, 8); wcout << L"↑ ← ↓ →";
+	SetColor(_RED); GotoXY(tmp + 9, 11); wcout << L"den do";
+	SetColor(_LIGHTBLUE);
 	while (1) {
 		if (_kbhit()) {
 			char press = _getch();
@@ -245,3 +249,63 @@ void DeleteImageOld(int x, int y, int w, int h) {
 	}
 }
 
+void CDRAW::printLevel(int x, int y, int level) {
+	SetColor(_LIGHTBLUE);
+	GotoXY(x, y + 0);  wcout << L" .----------------. ";
+	GotoXY(x, y + 1);  wcout << L"| .-Level--------. |";
+	GotoXY(x, y + 8);  wcout << L"| |              | |";
+	GotoXY(x, y + 9);  wcout << L"| '--------------' |";
+	GotoXY(x, y + 10); wcout << L" '----------------' ";
+	SetColor(_LIGHTGREEN);
+	GotoXY(x-2, y + 12); wcout << L"<!-- - - - - - - - - -->";
+	GotoXY(x-2, y + 13); wcout << L"<!--Your score:      -->";
+	GotoXY(x-2, y + 14); wcout << L"<!-- - - - - - - - - -->";
+	SetColor(_LIGHTBLUE);
+	if (level == 1) {
+		GotoXY(x, y + 2);  wcout << L"| |     __       | |";
+		GotoXY(x, y + 3);  wcout << L"| |    /  |      | |";
+		GotoXY(x, y + 4);  wcout << L"| |    `| |      | |";
+		GotoXY(x, y + 5);  wcout << L"| |     | |      | |";
+		GotoXY(x, y + 6);  wcout << L"| |    _| |_     | |";
+		GotoXY(x, y + 7);  wcout << L"| |   |_____|    | |";
+
+	}
+	else if (level == 2) {
+		GotoXY(x, y + 2);  wcout << L"| |    _____     | |";
+		GotoXY(x, y + 3);  wcout << L"| |   / ___ `.   | |";
+		GotoXY(x, y + 4);  wcout << L"| |  |_/___) |   | |";
+		GotoXY(x, y + 5);  wcout << L"| |   .'____.'   | |";
+		GotoXY(x, y + 6);  wcout << L"| |  / /____     | |";
+		GotoXY(x, y + 7);  wcout << L"| |  |_______|   | |";
+	}
+	else if (level == 3) {
+		GotoXY(x, y + 2);  wcout << L"| |    ______    | |";
+		GotoXY(x, y + 3);  wcout << L"| |   / ____ `.  | |";
+		GotoXY(x, y + 4);  wcout << L"| |   `'  __) |  | |";
+		GotoXY(x, y + 5);  wcout << L"| |   _  |__ '.  | |";
+		GotoXY(x, y + 6);  wcout << L"| |  | \\____) |  | |";
+		GotoXY(x, y + 7);  wcout << L"| |   \\______.'  | |";
+	}
+	else if (level == 4) {
+		GotoXY(x, y + 2);  wcout << L"| |   _    _     | |";
+		GotoXY(x, y + 3);  wcout << L"| |  | |  | |    | |";
+		GotoXY(x, y + 4);  wcout << L"| |  | |__| |_   | |";
+		GotoXY(x, y + 5);  wcout << L"| |  |____   _|  | |";
+		GotoXY(x, y + 6);  wcout << L"| |      _| |_   | |";
+		GotoXY(x, y + 7);  wcout << L"| |     |_____|  | |";
+	}
+	else if (level == 5) {
+		GotoXY(x, y + 2);  wcout << L"| |   _______    | |";
+		GotoXY(x, y + 3);  wcout << L"| |  |  _____|   | |";
+		GotoXY(x, y + 4);  wcout << L"| |  | |____     | |";
+		GotoXY(x, y + 5);  wcout << L"| |  '_.____''.  | |";
+		GotoXY(x, y + 6);  wcout << L"| |  | \\____) |  | |";
+		GotoXY(x, y + 7);  wcout << L"| |   \\______.'  | |";
+	}
+
+	SetColor(_WHITE);
+
+
+
+
+}

@@ -1,8 +1,6 @@
 #pragma once
-#include<iostream>
-#include<thread>
 #include"GUI.h"
-using namespace std;
+
 
 
 class CANIMAL{

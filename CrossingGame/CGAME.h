@@ -4,10 +4,13 @@
 #include"CVEHICLE.h"
 #include"GUI.h"
 
-#include<iostream>
-#include<string>
+#include<ctime>
+#include<thread>
 #include<fstream>
-using namespace std;
+#include<string>
+
+
+
 
 #define WIDTHROAD 130
 #define HEIGHTROAD 6
@@ -59,7 +62,7 @@ public:
 	void resumeGame();
 	void saveGame();
 	void loadGame();
-	void DebugOutput();
+	void DebugOutput(int x);
 	void updatePosPeople(char);
 	void updatePosVehicle(CVEHICLE*, int y);
 	void updatePosAnimal(CANIMAL*, int y);

@@ -1,8 +1,5 @@
 ﻿#include"CGAME.h"
-#include"GUI.h"
-#include"Mylib.h"
-#include"CVEHICLE.h"
-#include"CANIMAL.h"
+
 
 bool IS_RUNNING = false;
 extern CGAME* cg;//Biến toàn cục của hàm main
@@ -29,23 +26,23 @@ CGAME::~CGAME() {
 	level = 1;
 }
 
-void CGAME::DebugOutput() {
-	GotoXY(138, 33); wcout << "Level " << cg->level;
-	GotoXY(138, 34); wcout << "People Poss x: " << cg->cn->getX() << " y: " << cg->cn->getY() <<" ";
-	GotoXY(138, 35); wcout << "People status: " << cg->cn->getMState();
+void CGAME::DebugOutput(int x) {
+	GotoXY(x, 33); wcout << "Level " << cg->level;
+	GotoXY(x, 34); wcout << "People Poss x: " << cg->cn->getX() << " y: " << cg->cn->getY() <<" ";
+	GotoXY(x, 35); wcout << "People status: " << cg->cn->getMState();
 	
 	int oldPos;
 	for (int i = 0; i < getNumObjects(); i++) {
-		GotoXY(138, 1 + i); wcout << "Xe hoi " << i << " poss x:" << cg->axh[i].getX() << " y:" << cg->axh[i].getY();
+		GotoXY(x, 1 + i); wcout << "Xe hoi " << i << " poss x:" << cg->axh[i].getX() << " y:" << cg->axh[i].getY();
 	}
 	for (int i = 0; i < getNumObjects(); i++) {
-		GotoXY(138,1 + getNumObjects() + i); wcout <<"Xe tai " << i << " poss x:" << cg->axt[i].getX() << " y:" << cg->axt[i].getY();
+		GotoXY(x,1 + getNumObjects() + i); wcout <<"Xe tai " << i << " poss x:" << cg->axt[i].getX() << " y:" << cg->axt[i].getY();
 	}
 	for (int i = 0; i < getNumObjects(); i++) {
-		GotoXY(138, 1 + getNumObjects()*2 + i); wcout << "Con doi " << i << " poss x:" << cg->ad[i].getX() << " y:" << cg->ad[i].getY();
+		GotoXY(x, 1 + getNumObjects()*2 + i); wcout << "Con doi " << i << " poss x:" << cg->ad[i].getX() << " y:" << cg->ad[i].getY();
 	}
 	for (int i = 0; i < getNumObjects(); i++) {
-		GotoXY(138, 1 + getNumObjects() * 3 + i); wcout << "Ca sau " << i << " poss x:" << cg->acs[i].getX() << " y: " << cg->acs[i].getY();
+		GotoXY(x, 1 + getNumObjects() * 3 + i); wcout << "Ca sau " << i << " poss x:" << cg->acs[i].getX() << " y: " << cg->acs[i].getY();
 	}
 }
 
@@ -129,11 +126,16 @@ void CGAME::drawGame() {
 	}
 	GotoXY(WIDTHROAD, HEIGHTROAD * 6); wcout << L'┘';
 
+	//Hop con nho ben duoi
+	cdraw.printBox(137, 17, 35, 19);
+	GotoXY(138, 18); wcout << L"use      or         to move";
+	GotoXY(138, 19); wcout << L"Press: ' ' to pause game ";
+	GotoXY(138, 20); wcout << L"Press: ' ' to resume game ";
+	GotoXY(138, 21); wcout << L"Press: ' ' to load game ";
+	SetColor(_LIGHTBLUE); GotoXY(138 + 4, 18); wcout << L"WASD"; GotoXY(138 + 12, 18); wcout << L"↑ ← ↓ →";
+	GotoXY(138 + 8, 19); wcout << L"P"; GotoXY(138 + 8, 20); wcout << L"R"; GotoXY(138 + 8, 21); wcout << L"L";
+	SetColor(_WHITE);
 	
-	cdraw.printBox(137, 0, 40, 36);
-	
-	
-
 }
 
 //Cho xe di chuyển
@@ -276,9 +278,12 @@ void CGAME::updatePosPeople(char MOVING) {
 //Ham cap nhap
 void CGAME::PlayGame() {
 	while (IS_RUNNING) {
-		cg->DebugOutput();
+		CDRAW cdraw;
+		cdraw.printLevel(144, 1, cg->getLevel());
+		cg->DebugOutput(178);
 		cg->updatePosPeople(MOVING);
 
+		
 		//Kiểm tra tình trạng người chơi còn sống không?
 		/*if (!cg->getPeople()->isDead()) {*/
 		//}

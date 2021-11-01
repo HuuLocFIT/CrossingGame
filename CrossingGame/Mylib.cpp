@@ -1,5 +1,5 @@
 ﻿#include"Mylib.h"
-
+#include "CGAME.h"
 //Tránh thay đổi kích thước màn hình console
 void FixConsoleWindow() {
 	HWND consoleWindow = GetConsoleWindow();
