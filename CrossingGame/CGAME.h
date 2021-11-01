@@ -30,11 +30,6 @@
 
 
 
-//bool IS_RUNNING = false;
-//extern CGAME* cg;//Biến toàn cục của hàm main
-//extern char MOVING;//biến lấy kí tự nhấn phím
-
-
 
 class CGAME {
 private:
