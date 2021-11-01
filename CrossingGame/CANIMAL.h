@@ -1,8 +1,6 @@
 #pragma once
-#include<iostream>
-#include<thread>
 #include"GUI.h"
-using namespace std;
+
 
 
 class CANIMAL{
@@ -25,14 +23,13 @@ public:
 
 class CBAT : public CANIMAL {
 public:
-	void Move(int xBat, int yBat) {
-		printSmallBat(xBat, yBat);
-	}
+	void Move(int xBat, int yBat);
+	void printSmallBat(int xBat,int yBat);
 };
 
 class CCROCODILE : public CANIMAL {
 public:
-	void Move(int xCroc, int yCroc) {
-		printSmallCrocodile(xCroc, yCroc);
-	}
+	void Move(int xCroc, int yCroc);
+	void printSmallCrocodile(int xCroc,int yCroc);
+
 };

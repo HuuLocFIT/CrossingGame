@@ -58,7 +58,7 @@ bool CPEOPLE::isImpact(const CANIMAL* dv, int n) {
 }
 
 //Nếu va chạm thì trạng thái là chết
-	bool CPEOPLE::isDead() {
+bool CPEOPLE::isDead() {
 		if (mState == false) {
 			return true;
 		}

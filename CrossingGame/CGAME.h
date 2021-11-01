@@ -4,10 +4,13 @@
 #include"CVEHICLE.h"
 #include"GUI.h"
 
-#include<iostream>
-#include<string>
+#include<ctime>
+#include<thread>
 #include<fstream>
-using namespace std;
+#include<string>
+
+
+
 
 #define WIDTHROAD 130
 #define HEIGHTROAD 6
@@ -48,7 +51,8 @@ public:
 	
 	void setNumbetObjects(int num);
 	int getNumObjects();
-	void setLevel(int score);
+
+	void setLevel(int level);
 	int getLevel();
 
 	void resetGame();
@@ -59,10 +63,11 @@ public:
 	void resumeGame();
 	void saveGame();
 	void loadGame();
-	void DebugOutput();
+	void DebugOutput(int x);
 	void updatePosPeople(char);
 	void updatePosVehicle(CVEHICLE*, int y);
 	void updatePosAnimal(CANIMAL*, int y);
+	bool controlTrafficLight(int x, int y, int mode = 0, int time = 4);
 };
 
 void SubThread();

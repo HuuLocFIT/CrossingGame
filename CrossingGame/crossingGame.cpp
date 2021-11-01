@@ -1,19 +1,6 @@
-﻿#include<iostream>
-#include<string>
-#include<cmath>
-#include<fstream>
-#include<ctime>
-#include<conio.h>
-#include<fcntl.h> 
-#include<io.h>
-#include "windows.h"
-#include<thread>
+﻿#include"CGAME.h"
 
-#include"Mylib.h"
-#include"GUI.h"
-#include"CGAME.h"
 
-using namespace std;
 
 
 int yMove = 22;//Dùng để di chuyển trên Home page
@@ -115,7 +102,7 @@ void MainProgram(int x) {
 							system("pause");
 							break;
 						}
-						else if (opt == 'W' || opt == 'A' || opt == 'D' || opt == 'S' || opt == _UPkey || opt == _LEFTkey || opt == _RIGHTkey || opt == _DOWNkey) {
+						else if (opt == 'W' || opt == 'A' || opt == 'D' || opt == 'S' ) {
 							MOVING = opt;
 						}
 					}

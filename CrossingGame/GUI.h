@@ -1,10 +1,11 @@
 #pragma once
-#include<iostream>
 #include<ctime>
 #include<conio.h>
 #include<thread>
 #include"Mylib.h"
 
+#include<iostream>
+using namespace std;
 
 
 //Dinh nghia mau sac
@@ -19,6 +20,7 @@
 #define _LIGHTBLUE 11
 #define _RED 12
 #define _LIGHTYELLOW 14
+#define _WHITE 15
 //Dinh nghia phim an nguoi dung
 #define _UPkey 72
 #define _DOWNkey 80
@@ -42,6 +44,7 @@ public :
 	void printLoading();
 	void printCarLoading(int x, int y);
 	void printBox(int x, int y, int w, int h);
+	void printLevel(int x, int y, int level);
 	
 };
 
