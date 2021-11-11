@@ -45,9 +45,10 @@ public :
 	void printCarLoading(int x, int y);
 	void printBox(int x, int y, int w, int h);
 	void printLevel(int x, int y, int level);
+	void printPause(int x, int y);
 	
 };
 
-void printPeople(int x, int y);
+
 void MusicCarLoading();
 void DeleteImageOld(int x, int y, int w, int h);

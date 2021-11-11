@@ -277,3 +277,11 @@ void DeleteImageOld(int x, int y, int w, int h) {
 	}
 }
 
+void CDRAW::printPause(int x, int y) {
+	GotoXY(x, y);		wcout << "  ____                      ";
+	GotoXY(x, y + 1);	wcout << " |  _ \\ __ _ _   _ ___  ___ ";
+	GotoXY(x, y + 2);	wcout << " | |_) / _` | | | / __|/ _ \\";
+	GotoXY(x, y + 3);	wcout << " |  __/ (_| | |_| \\__ \\  __/";
+	GotoXY(x, y + 4);	wcout << " |_|   \\__,_|\\__,_|___/\\___|";
+
+}

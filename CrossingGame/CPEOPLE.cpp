@@ -47,7 +47,7 @@ bool CPEOPLE::isImpact(const CVEHICLE* xe, int n) {
 //Có va chạm vào động vật không
 bool CPEOPLE::isImpact(const CANIMAL* dv, int n) {
 	for (int i = 0; i < n; i++) {
-		if (mX >= dv[i].getX() && mX <= dv[i].getX() + 11 && (mY - 1) == dv[0].getY() ) {
+		if (mX >= dv[i].getX() && mX <= (dv[i].getX() + 11) && (mY - 1) == dv[0].getY() ) {
 			this->mState = false;
 			return true;
 		}

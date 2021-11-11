@@ -6,7 +6,7 @@
 int yMove = 22;//Dùng để di chuyển trên Home page
 char MOVING;
 CGAME* cg;
-
+extern bool IS_RUNNING;
 
 void LoadGame() {
 	CDRAW cdraw;
@@ -30,7 +30,6 @@ void MainProgram(int x) {
 	int yOld = yMove; //Toa do y cua mui ten di chuyen tren home page
 	char move;
 	cg = new CGAME();
-	bool isPause = false; //Kiem tra nguoi dung co an Pause hay chua neu chua thi vo hieu hoa
 	CDRAW cdraw;
 	while (true) {
 		if (press == true) {//Neu khong co dong lenh nay mui ten se nhay lien tuc vi khi chua duoc bam no van in ra
@@ -90,14 +89,14 @@ void MainProgram(int x) {
 						}
 						else if (opt == 'p') {
 							cg->pauseGame();
-							isPause = true;
+							
 						}
 						else if (opt == 'r' || opt == 'R') {
-							if (isPause) {
+							if (IS_RUNNING == false) {
 								cg->resumeGame();
 								t1.detach();
 								t1 = thread(SubThread);
-								isPause = false;
+								
 							}
 							
 						}
@@ -147,14 +146,14 @@ void MainProgram(int x) {
 					}
 					else if (opt == 'p') {
 						cg->pauseGame();
-						isPause = true;
+						
 					}
 					else if (opt == 'r' || opt == 'R') {
-						if (isPause) {
+						if (IS_RUNNING == false) {
 							cg->resumeGame();
 							t1.detach();
 							t1 = thread(SubThread);
-							isPause = false;
+							
 						}
 						
 					}
