@@ -11,12 +11,12 @@
 
 
 
-
 #define WIDTHROAD 130
-#define HEIGHTROAD 6
+#define HEIGHTROAD 6 //Don't chage it's will crash the game
 #define LEFTROAD 0
-#define RIGHT_VEHICLE 100
-#define RIGHT_ANIMAL 96
+
+#define RIGHT_VEHICLE 120
+#define RIGHT_BORDER_ANIMAL 118
 
 #define YCAR 8
 #define YBAT 14

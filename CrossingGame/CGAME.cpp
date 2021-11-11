@@ -102,14 +102,14 @@ void CGAME::resetGame() {
 	//Khoi tao danh sach con doi
 	ad = new CBAT[maxObjectInLevel];
 	for (int i = 0; i < maxObjectInLevel; i++) {
-		ad[i].setX(RIGHT_ANIMAL);
+		ad[i].setX(RIGHT_BORDER_ANIMAL);
 		ad[i].setY(YBAT);
 	}
 
 	//Khoi tao danh sach con ca sau
 	acs = new CCROCODILE[maxObjectInLevel];
 	for (int i = 0; i < maxObjectInLevel; i++) {
-		acs[i].setX(RIGHT_ANIMAL);
+		acs[i].setX(RIGHT_BORDER_ANIMAL);
 		acs[i].setY(YCROC);
 	}
 
@@ -203,7 +203,7 @@ void CGAME::updatePosAnimal(CANIMAL *dv, int y) {
 		if (dv[i].getX() == LEFTROAD) {
 			flag = 1;
 			xOld = dv[i].getX();
-			dv[i].setX(RIGHT_ANIMAL);
+			dv[i].setX(RIGHT_BORDER_ANIMAL);
 		}
 		if (flag == 1) {
 			DeleteImageOld(xOld + 2, y, 10, 4);
@@ -295,8 +295,8 @@ void CGAME::PlayGame() {
 		
 		
 		//Kiểm tra tình trạng người chơi còn sống không?
-		/*if (!cg->getPeople()->isDead()) {
-		}*/
+		
+		
 		MOVING = ' ';
 
 		//Kiểm tra người chơi đến đích chưa để qua màn mới
@@ -326,14 +326,6 @@ void CGAME::PlayGame() {
 		if (cg->controlTrafficLight(133, 7, 1)) {
 			cg->updatePosVehicle(axt, YTRUCK);
 		}
-			
-			
-			
-		
-		
-		
-		
-		
 		cg->drawGame();
 		
 		
@@ -349,6 +341,7 @@ void CGAME::PlayGame() {
 		else if (cg->getLevel() == 4) {
 			Sleep(30);
 		}
+		
 	}
 }
 
