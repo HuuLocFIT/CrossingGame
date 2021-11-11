@@ -28,6 +28,9 @@
 #define MAX_LV3 5
 #define MAX_LV4 6
 
+
+
+
 class CGAME {
 private:
 	CVEHICLE* axh;
@@ -39,6 +42,7 @@ private:
 	int level;
 	int numObjects;
 public:
+
 	CGAME();
 	~CGAME();
 	void drawGame();
@@ -75,3 +79,5 @@ public:
 void SubThread();
 //Ham phu lay ten tap tin de save game
 string takeFile();
+//Ham phu de kiem tra game co dang chay => Tranh TH nguoi choi bam resume game trong khi game da chay roi
+bool gameIsRunning();

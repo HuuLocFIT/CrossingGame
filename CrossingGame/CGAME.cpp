@@ -3,7 +3,6 @@
 //Luong chuong trinh
 //PlayGame -> While (StartGame, Resest Game, Update Pos)
 
-
 bool IS_RUNNING = false;
 extern CGAME* cg;//Biến toàn cục của hàm main
 extern char MOVING;//biến lấy kí tự nhấn phím
@@ -242,6 +241,12 @@ void CGAME::resumeGame() {
 	if (IS_RUNNING == false) {
 		IS_RUNNING = true;
 	}
+}
+
+bool gameIsRunning() {
+	if (IS_RUNNING == true)
+		return true;
+	return false;
 }
 
 void CGAME::updatePosPeople(char MOVING) {

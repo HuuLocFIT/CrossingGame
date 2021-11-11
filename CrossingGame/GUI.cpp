@@ -3,25 +3,24 @@
 extern int yMove;
 
 void CDRAW::printBox(int x, int y, int w, int h) {
-	//Vẽ đường ngang trên
-	GotoXY(x, y); wcout << L'┌';
+
+	//Vẽ đường ngang
 	for (int i = x + 1; i < x + w; i++) {
-		GotoXY(i, y); wcout << L'─';
+		GotoXY(i, y); wcout << L'─';           //Đường ngang trên
+		GotoXY(i, y + h); wcout << L'─';	   //Đường ngang dưới
 	}
-	GotoXY(x + w, y); wcout << L'┐';
 
 	//Vẽ đường dọc
 	for (int i = y + 1; i < y + h; i++) {
-		GotoXY(x, i); wcout << L'│';
-		GotoXY(x + w, i); wcout << L'│';
+		GotoXY(x, i); wcout << L'│';		   //Đường dọc trái
+		GotoXY(x + w, i); wcout << L'│';	   //Đường dọc phải
 	}
 
-	//Vẽ đường ngang dưới
-	GotoXY(x, y + h); wcout << L'└';
-	for (int i = x + 1; i < x + w; i++) {
-		GotoXY(i, y + h); wcout << L'─';
-	}
-	GotoXY(x + w, y + h); wcout << L'┘';
+	//Lấp đầy 4 góc của hộp
+	GotoXY(x, y); wcout << L'┌';			   //Góc trái trên
+	GotoXY(x + w, y); wcout << L'┐';           //Góc phải trên
+	GotoXY(x, y + h); wcout << L'└';		   //Góc trái dưới
+	GotoXY(x + w, y + h); wcout << L'┘';       //Góc phải dưới
 
 }
 void CDRAW::printThankYou(int x, int y) {
