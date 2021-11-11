@@ -7,7 +7,7 @@
 #define YPEOPLE 33
 //Bien cua people
 #define PEOPLE_BORDER_RIGHT 125
-#define PEOPLE_BORDER_LEFT 2
+#define PEOPLE_BORDER_LEFT 3
 #define PEOPLE_BORDER_UP 5
 #define PEOPLE_BORDER_DOWN 30
 

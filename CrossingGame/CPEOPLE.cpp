@@ -6,8 +6,12 @@ void CPEOPLE::Up(int y) {
 }
 
 void CPEOPLE::Left(int x) {
-	if(mX > PEOPLE_BORDER_LEFT)
+	
+	if (mX > PEOPLE_BORDER_LEFT) {
 		mX -= x;
+	}
+		
+	
 }
 
 void CPEOPLE::Right(int x) {
@@ -52,8 +56,6 @@ bool CPEOPLE::isImpact(const CANIMAL* dv, int n) {
 			return true;
 		}
 	}
-
-	
 	return false;
 }
 
@@ -69,11 +71,8 @@ bool CPEOPLE::isDead() {
 bool CPEOPLE::isFinish() {
 	if (mY >= 0 && mY <= 6)
 		return true;
-
 	return false;
 }
-
-
 void CPEOPLE::printPeople(int x, int y) {
 		GotoXY(x, y);	  wcout << " O";
 		GotoXY(x, y + 1); wcout << "/|\\";

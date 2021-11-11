@@ -68,6 +68,7 @@ public:
 	void updatePosVehicle(CVEHICLE*, int y);
 	void updatePosAnimal(CANIMAL*, int y);
 	bool controlTrafficLight(int x, int y, int mode = 0, int time = 4);
+	void controlImpact(CPEOPLE* cpeople);
 	
 };
 

@@ -29,37 +29,7 @@ CGAME::~CGAME() {
 	level = 1;
 }
 
-void CGAME::DebugOutput(int x) {
-	//x, y = 32
-	GotoXY(x, 33); wcout << "Level " << cg->level;
-	GotoXY(x, 34); wcout << "People Poss x: " << cg->cn->getX() << " y: " << cg->cn->getY() <<" ";
-	GotoXY(cg->cn->getX(), cg->cn->getY()); wcout << "x";
-	GotoXY(x, 35); wcout << "People status: " << cg->cn->getMState();
-	
-	int oldPos;
-	for (int i = 0; i < getNumObjects(); i++) {
-		GotoXY(x, 1 + i); wcout << "Xe hoi " << i << " poss x:" << cg->axh[i].getX() << " y:" << cg->axh[i].getY();
-		GotoXY(cg->axh[i].getX(), cg->axh[i].getY()); wcout << "x";
-		GotoXY(cg->axh[i].getX()+11, cg->axh[i].getY()); wcout << "y";
-	}
-	for (int i = 0; i < getNumObjects(); i++) {
-		GotoXY(x,2 + getNumObjects() + i); wcout <<"Xe tai " << i << " poss x:" << cg->axt[i].getX() << " y:" << cg->axt[i].getY();
-		GotoXY(cg->axt[i].getX(), cg->axt[i].getY()); wcout << "x";
-		GotoXY(cg->axt[i].getX()+11, cg->axt[i].getY()); wcout << "y";
-	}
-	for (int i = 0; i < getNumObjects(); i++) {
-		GotoXY(x, 3 + getNumObjects()*2 + i); wcout << "Con doi " << i << " poss x:" << cg->ad[i].getX() << " y:" << cg->ad[i].getY();
-		GotoXY(cg->ad[i].getX(), cg->ad[i].getY()); wcout << "x";
-		GotoXY(cg->ad[i].getX()+11, cg->ad[i].getY()); wcout << "y";
-	}
-	for (int i = 0; i < getNumObjects(); i++) {
-		GotoXY(x, 4 + getNumObjects() * 3 + i); wcout << "Ca sau " << i << " poss x:" << cg->acs[i].getX() << " y: " << cg->acs[i].getY();
-		GotoXY(cg->acs[i].getX(), cg->acs[i].getY()); wcout << "x";
-		GotoXY(cg->acs[i].getX()+11, cg->acs[i].getY()); wcout << "y";
-	}
 
-	GotoXY(x, 32); wcout << "IS_RUNNING "<< IS_RUNNING;
-}
 
 void CGAME::setLevel(int level) {
 	level = level;
@@ -152,8 +122,7 @@ void CGAME::drawGame() {
 	SetColor(_LIGHTBLUE); GotoXY(138 + 4, 18); wcout << L"WASD"; GotoXY(138 + 12, 18); wcout << L"↑ ← ↓ →";
 	GotoXY(138 + 8, 19); wcout << L"P"; GotoXY(138 + 8, 20); wcout << L"R"; GotoXY(138 + 8, 21); wcout << L"T"; GotoXY(138 + 8, 22); wcout << L"L";
 	SetColor(_WHITE);
-	if (IS_RUNNING == false) { cdraw.printPause(140, 24); }
-	else { DeleteImageOld(140, 24, 28, 5); }
+	if (IS_RUNNING == false) { cdraw.printPause(140, 24); } else { DeleteImageOld(140, 24, 28, 5); } //In Pause
 		
 }
 //Cho xe di chuyển
@@ -247,7 +216,6 @@ CPEOPLE *CGAME::getPeople() {
 	cn->isImpact(axt, cg->getNumObjects());
 	cn->isImpact(ad, cg->getNumObjects());
 	cn->isImpact(acs, cg->getNumObjects());
-	
 	return cn;
 }
 
@@ -264,8 +232,6 @@ void CGAME::startGame() {
 	IS_RUNNING = true;//Khởi tạo biến là true để bắt đầu thread vào trò chơi
 }
 
-
-
 void CGAME::pauseGame() {
 	if (IS_RUNNING == true) {
 		IS_RUNNING = false;
@@ -276,7 +242,6 @@ void CGAME::resumeGame() {
 	if (IS_RUNNING == false) {
 		IS_RUNNING = true;
 	}
-	
 }
 
 void CGAME::updatePosPeople(char MOVING) {
@@ -302,13 +267,11 @@ void CGAME::updatePosPeople(char MOVING) {
 }
 
 //Ham cap nhap
-
-
 void CGAME::PlayGame() {
 	while (IS_RUNNING) {
 		
 		CDRAW cdraw;
-
+		
 		cdraw.printLevel(144, 1, cg->getLevel());
 		cg->DebugOutput(178);
 		cg->updatePosPeople(MOVING);
@@ -347,10 +310,14 @@ void CGAME::PlayGame() {
 		if (cg->controlTrafficLight(133, 7, 1)) {
 			cg->updatePosVehicle(axt, YTRUCK);
 		}
-		cg->drawGame();
-		
-		
 
+	
+		cg->drawGame();
+
+		//Xu ly va cham
+		cg->controlImpact(cg->getPeople());
+		
+		
 		if(cg->getLevel() == 1)
 			Sleep(100);
 		else if (cg->getLevel() == 2) {
@@ -370,7 +337,13 @@ void CGAME::PlayGame() {
 string takeFile() {
 	string tailFile = ".txt";
 	string headFile;
+
+	//cgame.pauseGame();
+	//cdraw.printBox(55, 12, 35, 12);
+	//DeleteImageOld(55, 12, 35, 12);
+	//GotoXY(55, 13); 
 	wcout << "Enter a file's name: ";
+	
 	getline(cin, headFile);
 	string file = headFile + tailFile;
 	return file;
@@ -556,4 +529,62 @@ bool CGAME::controlTrafficLight(int x, int y, int mode, int timeZ) {
 		return false;
 	}
 	
+}
+
+void CGAME::controlImpact(CPEOPLE * t_people) {
+	CTRUCK ctruck;
+	if (t_people->getMState() == false) {
+		cg->pauseGame();
+		int xOld;
+		int i = RIGHT_VEHICLE - 1;
+		for (; i >= t_people->getX() - 8; i -= 4) {
+			if (i != RIGHT_VEHICLE - 1) {
+				DeleteImageOld(i + 4, t_people->getY() - 2, 12, 5);
+			}
+			ctruck.printAmbulance(i, t_people->getY() - 1);
+			Sleep(300);
+		}
+		DeleteImageOld(i + 4, t_people->getY() - 2, 12, 5);
+		for (; i <= PEOPLE_BORDER_RIGHT - 4; i += 4) {
+			if (i != t_people->getX() - 5) {
+				DeleteImageOld(i - 4, t_people->getY() - 2, 12, 5);
+			}
+			ctruck.printAmbulance2(i, t_people->getY() - 1);
+			Sleep(300);
+		}
+		DeleteImageOld(i - 4, t_people->getY() - 2, 12, 5);
+	}
+
+}
+
+void CGAME::DebugOutput(int x) {
+	//x, y = 32
+	GotoXY(x, 33); wcout << "Level " << cg->level;
+	GotoXY(x, 34); wcout << "People Poss x: " << cg->cn->getX() << " y: " << cg->cn->getY() << " ";
+	GotoXY(cg->cn->getX(), cg->cn->getY()); wcout << "x";
+	GotoXY(x, 35); wcout << "People status: " << cg->cn->getMState();
+
+	int oldPos;
+	for (int i = 0; i < getNumObjects(); i++) {
+		GotoXY(x, 1 + i); wcout << "Xe hoi " << i << " poss x:" << cg->axh[i].getX() << " y:" << cg->axh[i].getY();
+		GotoXY(cg->axh[i].getX(), cg->axh[i].getY()); wcout << "x";
+		GotoXY(cg->axh[i].getX() + 11, cg->axh[i].getY()); wcout << "y";
+	}
+	for (int i = 0; i < getNumObjects(); i++) {
+		GotoXY(x, 2 + getNumObjects() + i); wcout << "Xe tai " << i << " poss x:" << cg->axt[i].getX() << " y:" << cg->axt[i].getY();
+		GotoXY(cg->axt[i].getX(), cg->axt[i].getY()); wcout << "x";
+		GotoXY(cg->axt[i].getX() + 11, cg->axt[i].getY()); wcout << "y";
+	}
+	for (int i = 0; i < getNumObjects(); i++) {
+		GotoXY(x, 3 + getNumObjects() * 2 + i); wcout << "Con doi " << i << " poss x:" << cg->ad[i].getX() << " y:" << cg->ad[i].getY();
+		GotoXY(cg->ad[i].getX(), cg->ad[i].getY()); wcout << "x";
+		GotoXY(cg->ad[i].getX() + 11, cg->ad[i].getY()); wcout << "y";
+	}
+	for (int i = 0; i < getNumObjects(); i++) {
+		GotoXY(x, 4 + getNumObjects() * 3 + i); wcout << "Ca sau " << i << " poss x:" << cg->acs[i].getX() << " y: " << cg->acs[i].getY();
+		GotoXY(cg->acs[i].getX(), cg->acs[i].getY()); wcout << "x";
+		GotoXY(cg->acs[i].getX() + 11, cg->acs[i].getY()); wcout << "y";
+	}
+
+	GotoXY(x, 32); wcout << "IS_RUNNING " << IS_RUNNING;
 }

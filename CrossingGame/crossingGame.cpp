@@ -193,7 +193,6 @@ int main() {
 	_setmode(_fileno(stdout), _O_WTEXT);
 	setConsoleWindown(1780, 700);//x = 171, y = 40
 	FixConsoleWindow();
-
 	cdraw.printHomePage(40,6,90,25);
 	MainProgram(40);
 	return 0;
