@@ -100,7 +100,7 @@ void CDRAW::printHomePage(int x, int y, int w, int h) {
 void CDRAW::printAboutUs() {
 	SetColor(_LIGHTBLUE);
 	int tmp = 70;
-	printBox(tmp+3, 21, 28, 2);
+	printBox(tmp + 3, 21, 28, 2);
 	GotoXY(tmp, 2);  wcout << L"              .-\"\"\"-.";
 	GotoXY(tmp, 3);  wcout << L"             / .===. \\";
 	GotoXY(tmp, 4);  wcout << L"             \\/ 6 6 \\/";
@@ -120,24 +120,24 @@ void CDRAW::printAboutUs() {
 	GotoXY(tmp, 18); wcout << L"              |__|__|";
 	GotoXY(tmp, 18); wcout << L"              /-'Y'-\\";
 	GotoXY(tmp, 19); wcout << L"             (__/ \\__)";
-	GotoXY(tmp+6, 22);  wcout << "Press Esc to Exit";
+	GotoXY(tmp + 6, 22);  wcout << "Press Esc to Exit";
 
-	
+
 	while (1) {
 		if (_kbhit()) {
 			char press = _getch();
 			if (press == 27) return;
 		}
 	}
-	
+
 }
 void CDRAW::printInstructions() {
 	SetColor(_LIGHTBLUE);
 	int tmp = 50;
-	printBox(tmp+30, 21, 28, 2);
+	printBox(tmp + 30, 21, 28, 2);
 	GotoXY(tmp, 5);  wcout << L" ____________________________________________________________________________________";
 	GotoXY(tmp, 6);  wcout << L"/\\                                                                                   \\";
-	GotoXY(tmp, 7);  wcout << L"\\_| Huong dan                                                                         |"; 
+	GotoXY(tmp, 7);  wcout << L"\\_| Huong dan                                                                         |";
 	GotoXY(tmp, 8);  wcout << L"   | Dung cac phim WASD hoac ↑ ← ↓ → de di chuyen                                     |";
 	GotoXY(tmp, 9);  wcout << L"   | Di chuyen len dau de qua level tiep theo                                         |";
 	GotoXY(tmp, 10); wcout << L"   | Tranh cac chuong ngai vat khi di chuyen                                          |";
@@ -204,6 +204,28 @@ void CDRAW::printBanner(int x, int y) {
 	GotoXY(x, y + 4);   wcout << "|_______||_|   \\_\\|_______||_______||_______|  |_|   \\_\\|_______||_|   |_||______/";
 
 }
+
+
+
+
+
+void printPeople(int x, int y) {
+	GotoXY(x, y);	  wcout << " O";
+	GotoXY(x, y + 1); wcout << "/|\\";
+	GotoXY(x, y + 2); wcout << "/ \\";
+}
+void MusicCarLoading() {
+	PlaySound(TEXT("smb_world_clear.wav"), NULL, SND_SYNC);
+}
+void DeleteImageOld(int x, int y, int w, int h) {
+	for (int i = 0; i < h; i++) {
+		for (int j = x; j <= x + w; j++) {
+			GotoXY(j, y); wcout << " ";
+		}
+		y++;
+	}
+}
+
 void CDRAW::printLevel(int x, int y, int level) {
 	SetColor(_LIGHTBLUE);
 	GotoXY(x, y + 0);  wcout << L" .----------------. ";
@@ -264,23 +286,20 @@ void CDRAW::printLevel(int x, int y, int level) {
 
 
 }
-void MusicCarLoading() {
-	PlaySound(TEXT("smb_world_clear.wav"), NULL, SND_SYNC);
-}
-void DeleteImageOld(int x, int y, int w, int h) {
-	for (int i = 0; i < h; i++) {
-		for (int j = x; j <= x + w; j++) {
-			GotoXY(j, y); wcout << " ";
-		}
-		y++;
-	}
-}
 
-void CDRAW::printPause(int x, int y) {
-	GotoXY(x, y);		wcout << "  ____                      ";
-	GotoXY(x, y + 1);	wcout << " |  _ \\ __ _ _   _ ___  ___ ";
-	GotoXY(x, y + 2);	wcout << " | |_) / _` | | | / __|/ _ \\";
-	GotoXY(x, y + 3);	wcout << " |  __/ (_| | |_| \\__ \\  __/";
-	GotoXY(x, y + 4);	wcout << " |_|   \\__,_|\\__,_|___/\\___|";
+void CDRAW::printMessageWhenLose() {
+	int xPos = 20;
+	int yPos = 10;
+	for (int i = xPos; i <= xPos + 100; i++) {
+		GotoXY(i, yPos); wcout << L"_";
+		GotoXY(i, yPos + 5); wcout << L"_";
+	}
+	for (int j = yPos; j <= yPos + 5; j++) {
+		GotoXY(xPos, j); wcout << L"|";
+		GotoXY(xPos + 100, j); wcout << L"|";
+	}
+
+	GotoXY(xPos + 5, yPos + 2); wcout << L"YOU LOSE";
+	GotoXY(xPos + 5, yPos + 3); wcout << "PRESS Y TO CONTINUE OR ANY KEY TO EXIT";
 
 }

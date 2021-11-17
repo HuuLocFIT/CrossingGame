@@ -28,7 +28,25 @@ CGAME::~CGAME() {
 	level = 1;
 }
 
+void CGAME::DebugOutput(int x) {
+	GotoXY(x, 33); wcout << "Level " << cg->level;
+	GotoXY(x, 34); wcout << "People Poss x: " << cg->cn->getX() << " y: " << cg->cn->getY() << " ";
+	GotoXY(x, 35); wcout << "People status: " << cg->cn->getMState();
 
+	int oldPos;
+	for (int i = 0; i < getNumObjects(); i++) {
+		GotoXY(x, 1 + i); wcout << "Xe hoi " << i << " poss x:" << cg->axh[i].getX() << " y:" << cg->axh[i].getY();
+	}
+	for (int i = 0; i < getNumObjects(); i++) {
+		GotoXY(x, 1 + getNumObjects() + i); wcout << "Xe tai " << i << " poss x:" << cg->axt[i].getX() << " y:" << cg->axt[i].getY();
+	}
+	for (int i = 0; i < getNumObjects(); i++) {
+		GotoXY(x, 1 + getNumObjects() * 2 + i); wcout << "Con doi " << i << " poss x:" << cg->ad[i].getX() << " y:" << cg->ad[i].getY();
+	}
+	for (int i = 0; i < getNumObjects(); i++) {
+		GotoXY(x, 1 + getNumObjects() * 3 + i); wcout << "Ca sau " << i << " poss x:" << cg->acs[i].getX() << " y: " << cg->acs[i].getY();
+	}
+}
 
 void CGAME::setLevel(int level) {
 	level = level;
@@ -62,10 +80,10 @@ int CGAME::getNumObjects() {
 }
 
 //Khởi tạo giá trị mặc định cho Game
-void CGAME::resetGame() {
-
+void CGAME::resetGame(int level) {
+	cg->setLevel(level);
 	int maxObjectInLevel = cg->getNumObjects();//So doi tuong xe, con vat toi da trong mot tro choi
-	
+
 	//Khoi tao danh sach xe hoi
 	axh = new CCAR[maxObjectInLevel];
 	for (int i = 0; i < maxObjectInLevel; i++) {
@@ -83,14 +101,14 @@ void CGAME::resetGame() {
 	//Khoi tao danh sach con doi
 	ad = new CBAT[maxObjectInLevel];
 	for (int i = 0; i < maxObjectInLevel; i++) {
-		ad[i].setX(RIGHT_BORDER_ANIMAL);
+		ad[i].setX(RIGHT_ANIMAL);
 		ad[i].setY(YBAT);
 	}
 
 	//Khoi tao danh sach con ca sau
 	acs = new CCROCODILE[maxObjectInLevel];
 	for (int i = 0; i < maxObjectInLevel; i++) {
-		acs[i].setX(RIGHT_BORDER_ANIMAL);
+		acs[i].setX(RIGHT_ANIMAL);
 		acs[i].setY(YCROC);
 	}
 
@@ -116,20 +134,20 @@ void CGAME::drawGame() {
 	GotoXY(138, 18); wcout << L"use      or         to move";
 	GotoXY(138, 19); wcout << L"Press: ' ' to pause game ";
 	GotoXY(138, 20); wcout << L"Press: ' ' to resume game ";
-	GotoXY(138, 21); wcout << L"Press: ' ' to save game ";
-	GotoXY(138, 22); wcout << L"Press: ' ' to load game ";
+	GotoXY(138, 21); wcout << L"Press: ' ' to load game ";
 	SetColor(_LIGHTBLUE); GotoXY(138 + 4, 18); wcout << L"WASD"; GotoXY(138 + 12, 18); wcout << L"↑ ← ↓ →";
-	GotoXY(138 + 8, 19); wcout << L"P"; GotoXY(138 + 8, 20); wcout << L"R"; GotoXY(138 + 8, 21); wcout << L"T"; GotoXY(138 + 8, 22); wcout << L"L";
+	GotoXY(138 + 8, 19); wcout << L"P"; GotoXY(138 + 8, 20); wcout << L"R"; GotoXY(138 + 8, 21); wcout << L"L";
 	SetColor(_WHITE);
-	if (IS_RUNNING == false) { cdraw.printPause(140, 24); } else { DeleteImageOld(140, 24, 28, 5); } //In Pause
-		
+
+
+
 }
 //Cho xe di chuyển
-void CGAME::updatePosVehicle(CVEHICLE *xe, int y) {
+void CGAME::updatePosVehicle(CVEHICLE* xe, int y) {
 	int flag = 0, xOld;
 	int maxObjectInLevel = cg->getNumObjects();//So doi tuong xe, con vat toi da trong mot tro choi
 	for (int i = 0; i < maxObjectInLevel; i++) {
-		int x = xe[i].getX(); 
+		int x = xe[i].getX();
 		int y = xe[i].getY();
 
 		if (i == 0) {
@@ -160,7 +178,7 @@ void CGAME::updatePosVehicle(CVEHICLE *xe, int y) {
 }
 
 //Tương tự như hàm updatePosVehicle
-void CGAME::updatePosAnimal(CANIMAL *dv, int y) {
+void CGAME::updatePosAnimal(CANIMAL* dv, int y) {
 	int flag = 0, xOld;
 	int maxObjectInLevel = cg->getNumObjects();//So doi tuong xe, con vat toi da trong mot tro choi
 	for (int i = 0; i < maxObjectInLevel; i++) {
@@ -183,7 +201,7 @@ void CGAME::updatePosAnimal(CANIMAL *dv, int y) {
 		if (dv[i].getX() == LEFTROAD) {
 			flag = 1;
 			xOld = dv[i].getX();
-			dv[i].setX(RIGHT_BORDER_ANIMAL);
+			dv[i].setX(RIGHT_ANIMAL);
 		}
 		if (flag == 1) {
 			DeleteImageOld(xOld + 2, y, 10, 4);
@@ -210,11 +228,12 @@ CANIMAL* CGAME::getCrocodile() {
 }
 
 //Hàm kiểm tra có đụng vào vật cản không
-CPEOPLE *CGAME::getPeople() {
+CPEOPLE* CGAME::getPeople() {
 	cn->isImpact(axh, cg->getNumObjects());
 	cn->isImpact(axt, cg->getNumObjects());
 	cn->isImpact(ad, cg->getNumObjects());
 	cn->isImpact(acs, cg->getNumObjects());
+
 	return cn;
 }
 
@@ -227,20 +246,15 @@ void CGAME::startGame() {
 	system("cls");
 	SetColor(_GRAY);
 
-	GotoXY(160, 30);
 	IS_RUNNING = true;//Khởi tạo biến là true để bắt đầu thread vào trò chơi
 }
 
 void CGAME::pauseGame() {
-	if (IS_RUNNING == true) {
-		IS_RUNNING = false;
-	}
+	IS_RUNNING = false;
 }
 
 void CGAME::resumeGame() {
-	if (IS_RUNNING == false) {
-		IS_RUNNING = true;
-	}
+	IS_RUNNING = true;
 }
 
 bool gameIsRunning() {
@@ -254,38 +268,39 @@ void CGAME::updatePosPeople(char MOVING) {
 	int xOld = cn->getX();
 	int yOld = cn->getY();
 	DeleteImageOld(xOld, yOld, 4, 3);
-	if (MOVING == 'w' || MOVING == _UPkey) {
+	if (MOVING == 'W' || MOVING == _UPkey) {
 		cn->Up(6);//Bước đi lên
 	}
-	else if (MOVING == 's' || MOVING == _DOWNkey) {
+	else if (MOVING == 'S' || MOVING == _DOWNkey) {
 		cn->Down(6);//Bước đi xuống
 	}
-	else if (MOVING == 'a' || MOVING == _LEFTkey) {
-		
+	else if (MOVING == 'A' || MOVING == _LEFTkey) {
+
 		cn->Left(3);//Qua trái
 	}
-	else if (MOVING == 'd' || MOVING == _RIGHTkey) {
+	else if (MOVING == 'D' || MOVING == _RIGHTkey) {
 		cn->Right(3);//Qua phải
 	}
-	cn->printPeople(cn->getX() , cn->getY());//Bắt đầu in người
-	
+	printPeople(cn->getX(), cn->getY());//Bắt đầu in người
+
 }
 
 //Ham cap nhap
+
+
 void CGAME::PlayGame() {
 	while (IS_RUNNING) {
-		
+
 		CDRAW cdraw;
-		
 		cdraw.printLevel(144, 1, cg->getLevel());
-		cg->DebugOutput(178);
+		//cg->DebugOutput(178);
 		cg->updatePosPeople(MOVING);
 
-		
-		
+
+
 		//Kiểm tra tình trạng người chơi còn sống không?
-		
-		
+		/*if (!cg->getPeople()->isDead()) {*/
+		//}
 		MOVING = ' ';
 
 		//Kiểm tra người chơi đến đích chưa để qua màn mới
@@ -293,37 +308,50 @@ void CGAME::PlayGame() {
 			if (cg->getLevel() < 5) {
 				cg->level++;
 			}
+			else if (cg->getLevel() >= 5) {
+				cg->level = 1;
+			}
 			system("cls");
-			cg->resetGame();
+			cg->resetGame(cg->level);
 			cg->startGame();
 			continue;
 		}
-		
-		
-		
+
+		if (cg->getPeople()->isDead()) {
+			system("cls");
+			cdraw.printMessageWhenLose();
+			break;
+		}
+
+
+
 		if (cg->controlTrafficLight(133, 13, 0)) {
 			cg->updatePosAnimal(ad, YBAT);
 		}
 		if (cg->controlTrafficLight(133, 19, 1)) {
-			
+
 			cg->updatePosVehicle(axh, YCAR);
-		} 
+		}
 		if (cg->controlTrafficLight(133, 25, 0)) {
-			
+
 			cg->updatePosAnimal(acs, YCROC);
-		} 
+		}
 		if (cg->controlTrafficLight(133, 7, 1)) {
 			cg->updatePosVehicle(axt, YTRUCK);
 		}
 
-	
+
+
+
+
+
+
+
 		cg->drawGame();
 
-		//Xu ly va cham
-		cg->controlImpact(cg->getPeople());
-		
-		
-		if(cg->getLevel() == 1)
+
+
+		if (cg->getLevel() == 1)
 			Sleep(100);
 		else if (cg->getLevel() == 2) {
 			Sleep(80);
@@ -334,7 +362,6 @@ void CGAME::PlayGame() {
 		else if (cg->getLevel() == 4) {
 			Sleep(30);
 		}
-		
 	}
 }
 
@@ -342,13 +369,7 @@ void CGAME::PlayGame() {
 string takeFile() {
 	string tailFile = ".txt";
 	string headFile;
-
-	//cgame.pauseGame();
-	//cdraw.printBox(55, 12, 35, 12);
-	//DeleteImageOld(55, 12, 35, 12);
-	//GotoXY(55, 13); 
 	wcout << "Enter a file's name: ";
-	
 	getline(cin, headFile);
 	string file = headFile + tailFile;
 	return file;
@@ -409,7 +430,7 @@ void CGAME::loadGame() {
 	}
 	else {
 		//Lay so luong object trong mot game
-		
+
 
 		int numObjects;
 		fin >> numObjects; this->setNumbetObjects(numObjects);
@@ -497,7 +518,7 @@ void CGAME::loadGame() {
 }
 
 //EXIT GAME
-void CGAME::exitGame(thread *t1) {
+void CGAME::exitGame(thread* t1) {
 	IS_RUNNING = false;
 	t1->join();//Kết thúc tiểu trình
 }
@@ -507,89 +528,29 @@ void SubThread() {
 	cg->PlayGame();
 }
 
-
-//timeZ > -> thoi gian den thay doi trang thai
 bool CGAME::controlTrafficLight(int x, int y, int mode, int timeZ) {
 	srand(time(0));
 	clock_t TimeZero = clock(); //Start timer
 	double deltaTime = 0;
 	double secondsToDelay = 2;
-	deltaTime = (((clock()) / CLOCKS_PER_SEC / timeZ % 2) + (mode))%2;
-	//GotoXY(138, 22); wcout << deltaTime;
+	deltaTime = (((clock()) / CLOCKS_PER_SEC / timeZ % 2) + (mode)) % 2;
+	GotoXY(138, 22); wcout << deltaTime;
 	int i = deltaTime;
-	
+
 	CDRAW cdraw;
 	GotoXY(x - 1, y); wcout << L"|  |";
 	GotoXY(x - 1, y + 2); wcout << L"|  |";
 	if (i) {
-		
+
 		GotoXY(x, y + 2); SetColor(_LIGHTGREEN); wcout << L"▓▓";
 		SetColor(_WHITE);
 		return true;
 	}
 	else {
-		
+
 		GotoXY(x, y); SetColor(_RED); wcout << L"▓▓";
 		SetColor(_WHITE);
 		return false;
 	}
-	
-}
 
-void CGAME::controlImpact(CPEOPLE * t_people) {
-	CTRUCK ctruck;
-	if (t_people->getMState() == false) {
-		cg->pauseGame();
-		int xOld;
-		int i = RIGHT_VEHICLE - 1;
-		for (; i >= t_people->getX() - 8; i -= 4) {
-			if (i != RIGHT_VEHICLE - 1) {
-				DeleteImageOld(i + 4, t_people->getY() - 2, 12, 5);
-			}
-			ctruck.printAmbulance(i, t_people->getY() - 1);
-			Sleep(300);
-		}
-		DeleteImageOld(i + 4, t_people->getY() - 2, 12, 5);
-		for (; i <= PEOPLE_BORDER_RIGHT - 4; i += 4) {
-			if (i != t_people->getX() - 5) {
-				DeleteImageOld(i - 4, t_people->getY() - 2, 12, 5);
-			}
-			ctruck.printAmbulance2(i, t_people->getY() - 1);
-			Sleep(300);
-		}
-		DeleteImageOld(i - 4, t_people->getY() - 2, 12, 5);
-	}
-
-}
-
-void CGAME::DebugOutput(int x) {
-	//x, y = 32
-	GotoXY(x, 33); wcout << "Level " << cg->level;
-	GotoXY(x, 34); wcout << "People Poss x: " << cg->cn->getX() << " y: " << cg->cn->getY() << " ";
-	GotoXY(cg->cn->getX(), cg->cn->getY()); wcout << "x";
-	GotoXY(x, 35); wcout << "People status: " << cg->cn->getMState();
-
-	int oldPos;
-	for (int i = 0; i < getNumObjects(); i++) {
-		GotoXY(x, 1 + i); wcout << "Xe hoi " << i << " poss x:" << cg->axh[i].getX() << " y:" << cg->axh[i].getY();
-		GotoXY(cg->axh[i].getX(), cg->axh[i].getY()); wcout << "x";
-		GotoXY(cg->axh[i].getX() + 11, cg->axh[i].getY()); wcout << "y";
-	}
-	for (int i = 0; i < getNumObjects(); i++) {
-		GotoXY(x, 2 + getNumObjects() + i); wcout << "Xe tai " << i << " poss x:" << cg->axt[i].getX() << " y:" << cg->axt[i].getY();
-		GotoXY(cg->axt[i].getX(), cg->axt[i].getY()); wcout << "x";
-		GotoXY(cg->axt[i].getX() + 11, cg->axt[i].getY()); wcout << "y";
-	}
-	for (int i = 0; i < getNumObjects(); i++) {
-		GotoXY(x, 3 + getNumObjects() * 2 + i); wcout << "Con doi " << i << " poss x:" << cg->ad[i].getX() << " y:" << cg->ad[i].getY();
-		GotoXY(cg->ad[i].getX(), cg->ad[i].getY()); wcout << "x";
-		GotoXY(cg->ad[i].getX() + 11, cg->ad[i].getY()); wcout << "y";
-	}
-	for (int i = 0; i < getNumObjects(); i++) {
-		GotoXY(x, 4 + getNumObjects() * 3 + i); wcout << "Ca sau " << i << " poss x:" << cg->acs[i].getX() << " y: " << cg->acs[i].getY();
-		GotoXY(cg->acs[i].getX(), cg->acs[i].getY()); wcout << "x";
-		GotoXY(cg->acs[i].getX() + 11, cg->acs[i].getY()); wcout << "y";
-	}
-
-	GotoXY(x, 32); wcout << "IS_RUNNING " << IS_RUNNING;
 }

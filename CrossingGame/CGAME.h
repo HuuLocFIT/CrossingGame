@@ -12,11 +12,10 @@
 
 
 #define WIDTHROAD 130
-#define HEIGHTROAD 6 //Don't chage it's will crash the game
+#define HEIGHTROAD 6
 #define LEFTROAD 0
-
-#define RIGHT_VEHICLE 120
-#define RIGHT_BORDER_ANIMAL 118
+#define RIGHT_VEHICLE 100
+#define RIGHT_ANIMAL 96
 
 #define YCAR 8
 #define YBAT 14
@@ -46,20 +45,20 @@ public:
 	CGAME();
 	~CGAME();
 	void drawGame();
-	
+
 	CVEHICLE* getCars();
 	CVEHICLE* getTrucks();
 	CANIMAL* getBats();
 	CANIMAL* getCrocodile();
-	CPEOPLE *getPeople();
-	
+	CPEOPLE* getPeople();
+
 	void setNumbetObjects(int num);
 	int getNumObjects();
 
 	void setLevel(int level);
 	int getLevel();
 
-	void resetGame();
+	void resetGame(int);
 	void exitGame(thread*);
 	void PlayGame();
 	void startGame();
@@ -72,8 +71,6 @@ public:
 	void updatePosVehicle(CVEHICLE*, int y);
 	void updatePosAnimal(CANIMAL*, int y);
 	bool controlTrafficLight(int x, int y, int mode = 0, int time = 4);
-	void controlImpact(CPEOPLE* cpeople);
-	
 };
 
 void SubThread();
