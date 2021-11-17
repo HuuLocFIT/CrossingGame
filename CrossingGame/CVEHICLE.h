@@ -32,4 +32,6 @@ class CTRUCK : public CVEHICLE {
 public:
 	void Move(int xTruck, int yTruck);
 	void printSmallTruck(int xTruck,int yTruck);
+	void printAmbulance(int x, int y);
+	void printAmbulance2(int x, int y);
 };

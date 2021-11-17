@@ -26,3 +26,20 @@ void CTRUCK::printSmallTruck(int x, int y) {
 	GotoXY(x, y + 2); wcout << L"│______│__│";
 	GotoXY(x, y + 3); wcout << L" O        O";
 }
+
+void CTRUCK::printAmbulance(int x, int y) {
+	SetColor(_RED);
+	GotoXY(x, y);     wcout << L"   _______";
+	GotoXY(x, y + 1); wcout << L" __│ ═╬═  │";
+	GotoXY(x, y + 2); wcout << L"│__│___114│";
+	GotoXY(x, y + 3); wcout << L" O        O";
+	SetColor(_WHITE);
+}
+void CTRUCK::printAmbulance2(int x, int y) {
+	SetColor(_RED);
+	GotoXY(x, y);     wcout << L" ______";
+	GotoXY(x, y + 1); wcout << L"│   ═╬═│__";
+	GotoXY(x, y + 2); wcout << L"│114___│__│";
+	GotoXY(x, y + 3); wcout << L" O        O";
+	SetColor(_WHITE);
+}

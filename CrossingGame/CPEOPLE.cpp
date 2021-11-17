@@ -1,22 +1,26 @@
 ﻿#include"CPEOPLE.h"
 
 void CPEOPLE::Up(int y) {
-	if(mY > 5)
+	if(mY > PEOPLE_BORDER_UP)
 		mY -= y;
 }
 
 void CPEOPLE::Left(int x) {
-	if(mX > 0)
+	
+	if (mX > PEOPLE_BORDER_LEFT) {
 		mX -= x;
+	}
+		
+	
 }
 
 void CPEOPLE::Right(int x) {
-	if(mX < 104)
+	if(mX < PEOPLE_BORDER_RIGHT)
 		mX += x;
 }
 
 void CPEOPLE::Down(int y) {
-	if(mY < 30)
+	if(mY < PEOPLE_BORDER_DOWN)
 		mY += y;
 }
 
@@ -47,13 +51,11 @@ bool CPEOPLE::isImpact(const CVEHICLE* xe, int n) {
 //Có va chạm vào động vật không
 bool CPEOPLE::isImpact(const CANIMAL* dv, int n) {
 	for (int i = 0; i < n; i++) {
-		if (mX >= dv[i].getX() && mX <= dv[i].getX() + 11 && (mY - 1) == dv[0].getY() ) {
+		if (mX >= dv[i].getX() && mX <= (dv[i].getX() + 11) && (mY - 1) == dv[0].getY() ) {
 			this->mState = false;
 			return true;
 		}
 	}
-
-	
 	return false;
 }
 
@@ -69,7 +71,10 @@ bool CPEOPLE::isDead() {
 bool CPEOPLE::isFinish() {
 	if (mY >= 0 && mY <= 6)
 		return true;
-
 	return false;
 }
-
+void CPEOPLE::printPeople(int x, int y) {
+		GotoXY(x, y);	  wcout << " O";
+		GotoXY(x, y + 1); wcout << "/|\\";
+		GotoXY(x, y + 2); wcout << "/ \\";
+}

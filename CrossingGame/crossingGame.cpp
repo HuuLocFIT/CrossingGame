@@ -3,7 +3,7 @@
 int yMove = 22;//Dùng để di chuyển trên Home page
 char MOVING;
 CGAME* cg;
-
+extern bool IS_RUNNING;
 
 void LoadGame() {
 	CDRAW cdraw;
@@ -77,22 +77,21 @@ void MainProgram(int x) {
 				thread t1(SubThread);
 				char opt;
 				while (true) {
-					opt = toupper(_getch());
+					opt = _getch(); //Khong dung toupper tai vi trung ma ascii voi _DOWNkey
 
 					if (cg->getPeople()->isDead() == false) {
 						if (opt == 27) {
 							cg->exitGame(&t1);
 							break;
 						}
-						else if (opt == 'P') {
+						else if (opt == 'p') {
 							cg->pauseGame();
+							
 						}
 						else if (opt == 'R') {
-							if (gameIsRunning() == false) {
-								cg->resumeGame();
-								t1.detach();
-								t1 = thread(SubThread);
-							}
+							cg->resumeGame();
+							t1.detach();
+							t1 = thread(SubThread);
 						}
 						else if (opt == 'O') {
 							cg->exitGame(&t1);
@@ -101,13 +100,13 @@ void MainProgram(int x) {
 							system("pause");
 							break;
 						}
-						else if (opt == 'W' || opt == 'A' || opt == 'D' || opt == 'S' ) {
+						else if (opt == 'w' || opt == 'a' || opt == 'd' || opt == 's' || opt == _UPkey || opt == _DOWNkey || opt == _LEFTkey || opt == _RIGHTkey) {
 							MOVING = opt;
 						}
 					}
 					else {
 						system("cls");
-						if (opt == 'Y')
+						if (opt == 'y' || opt == 'Y')
 						{
 							cg->exitGame(&t1);
 							cg->startGame();
@@ -132,21 +131,20 @@ void MainProgram(int x) {
 
 				char opt;
 				while (1) {
-					opt = toupper(_getch());
+					opt = _getch();
 
 					if (opt == 27) {
 						cg->exitGame(&t1);
 						break;
 					}
-					else if (opt == 'P') {
+					else if (opt == 'p') {
 						cg->pauseGame();
+						
 					}
 					else if (opt == 'R') {
-						if (gameIsRunning() == false) {
-							cg->resumeGame();
-							t1.detach();
-							t1 = thread(SubThread);
-						}
+						cg->resumeGame();
+						t1.detach();
+						t1 = thread(SubThread);
 					}
 					else if (opt == 'O') {
 						system("cls");
@@ -155,7 +153,7 @@ void MainProgram(int x) {
 						system("pause");
 						break;
 					}
-					else if (opt == 'W' || opt == 'A' || opt == 'D' || opt == 'S') {
+					else if (opt == 'w' || opt == 'a' || opt == 'd' || opt == 's' || opt == _UPkey || opt == _DOWNkey || opt == _LEFTkey || opt == _RIGHTkey) {
 						MOVING = opt;
 					}
 
@@ -184,7 +182,6 @@ int main() {
 	_setmode(_fileno(stdout), _O_WTEXT);
 	setConsoleWindown(1780, 700);//x = 171, y = 40
 	FixConsoleWindow();
-
 	cdraw.printHomePage(40,6,90,25);
 	MainProgram(40);
 	return 0;
