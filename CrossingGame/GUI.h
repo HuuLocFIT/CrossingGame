@@ -32,7 +32,7 @@ using namespace std;
 using namespace std;
 
 class CDRAW {
-public :
+public:
 	void printHomePage(int x, int y, int w, int h);
 	void printBanner(int x, int y);
 	void printAgainHomePage();
@@ -45,7 +45,7 @@ public :
 	void printCarLoading(int x, int y);
 	void printBox(int x, int y, int w, int h);
 	void printLevel(int x, int y, int level);
-	
+	void printMessageWhenLose();
 };
 
 

@@ -32,10 +32,15 @@ class CTRUCK : public CVEHICLE {
 public:
 	void Move(int xTruck, int yTruck);
 	void printSmallTruck(int xTruck,int yTruck);
+<<<<<<< HEAD
 };
 
 class CAMBULANCE : public CVEHICLE {
 public:
 	void Move(int xAmbulance, int yAmbulance);
 	void printSmallAmbulance(int xAmbulance, int yAmbulance);
+=======
+	void printAmbulance(int x, int y);
+	void printAmbulance2(int x, int y);
+>>>>>>> 29d5ff3fd9be7ed049b9d6b2fca32adf8d3af1a6
 };

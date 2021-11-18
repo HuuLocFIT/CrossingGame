@@ -3,25 +3,24 @@
 extern int yMove;
 
 void CDRAW::printBox(int x, int y, int w, int h) {
-	//Vẽ đường ngang trên
-	GotoXY(x, y); wcout << L'┌';
+
+	//Vẽ đường ngang
 	for (int i = x + 1; i < x + w; i++) {
-		GotoXY(i, y); wcout << L'─';
+		GotoXY(i, y); wcout << L'─';           //Đường ngang trên
+		GotoXY(i, y + h); wcout << L'─';	   //Đường ngang dưới
 	}
-	GotoXY(x + w, y); wcout << L'┐';
 
 	//Vẽ đường dọc
 	for (int i = y + 1; i < y + h; i++) {
-		GotoXY(x, i); wcout << L'│';
-		GotoXY(x + w, i); wcout << L'│';
+		GotoXY(x, i); wcout << L'│';		   //Đường dọc trái
+		GotoXY(x + w, i); wcout << L'│';	   //Đường dọc phải
 	}
 
-	//Vẽ đường ngang dưới
-	GotoXY(x, y + h); wcout << L'└';
-	for (int i = x + 1; i < x + w; i++) {
-		GotoXY(i, y + h); wcout << L'─';
-	}
-	GotoXY(x + w, y + h); wcout << L'┘';
+	//Lấp đầy 4 góc của hộp
+	GotoXY(x, y); wcout << L'┌';			   //Góc trái trên
+	GotoXY(x + w, y); wcout << L'┐';           //Góc phải trên
+	GotoXY(x, y + h); wcout << L'└';		   //Góc trái dưới
+	GotoXY(x + w, y + h); wcout << L'┘';       //Góc phải dưới
 
 }
 void CDRAW::printThankYou(int x, int y) {
@@ -101,7 +100,7 @@ void CDRAW::printHomePage(int x, int y, int w, int h) {
 void CDRAW::printAboutUs() {
 	SetColor(_LIGHTBLUE);
 	int tmp = 70;
-	printBox(tmp+3, 21, 28, 2);
+	printBox(tmp + 3, 21, 28, 2);
 	GotoXY(tmp, 2);  wcout << L"              .-\"\"\"-.";
 	GotoXY(tmp, 3);  wcout << L"             / .===. \\";
 	GotoXY(tmp, 4);  wcout << L"             \\/ 6 6 \\/";
@@ -121,24 +120,24 @@ void CDRAW::printAboutUs() {
 	GotoXY(tmp, 18); wcout << L"              |__|__|";
 	GotoXY(tmp, 18); wcout << L"              /-'Y'-\\";
 	GotoXY(tmp, 19); wcout << L"             (__/ \\__)";
-	GotoXY(tmp+6, 22);  wcout << "Press Esc to Exit";
+	GotoXY(tmp + 6, 22);  wcout << "Press Esc to Exit";
 
-	
+
 	while (1) {
 		if (_kbhit()) {
 			char press = _getch();
 			if (press == 27) return;
 		}
 	}
-	
+
 }
 void CDRAW::printInstructions() {
 	SetColor(_LIGHTBLUE);
 	int tmp = 50;
-	printBox(tmp+30, 21, 28, 2);
+	printBox(tmp + 30, 21, 28, 2);
 	GotoXY(tmp, 5);  wcout << L" ____________________________________________________________________________________";
 	GotoXY(tmp, 6);  wcout << L"/\\                                                                                   \\";
-	GotoXY(tmp, 7);  wcout << L"\\_| Huong dan                                                                         |"; 
+	GotoXY(tmp, 7);  wcout << L"\\_| Huong dan                                                                         |";
 	GotoXY(tmp, 8);  wcout << L"   | Dung cac phim WASD hoac ↑ ← ↓ → de di chuyen                                     |";
 	GotoXY(tmp, 9);  wcout << L"   | Di chuyen len dau de qua level tiep theo                                         |";
 	GotoXY(tmp, 10); wcout << L"   | Tranh cac chuong ngai vat khi di chuyen                                          |";
@@ -235,9 +234,9 @@ void CDRAW::printLevel(int x, int y, int level) {
 	GotoXY(x, y + 9);  wcout << L"| '--------------' |";
 	GotoXY(x, y + 10); wcout << L" '----------------' ";
 	SetColor(_LIGHTGREEN);
-	GotoXY(x-2, y + 12); wcout << L"<!-- - - - - - - - - -->";
-	GotoXY(x-2, y + 13); wcout << L"<!--Your score:      -->";
-	GotoXY(x-2, y + 14); wcout << L"<!-- - - - - - - - - -->";
+	GotoXY(x - 2, y + 12); wcout << L"<!-- - - - - - - - - -->";
+	GotoXY(x - 2, y + 13); wcout << L"<!--Your score:      -->";
+	GotoXY(x - 2, y + 14); wcout << L"<!-- - - - - - - - - -->";
 	SetColor(_LIGHTBLUE);
 	if (level == 1) {
 		GotoXY(x, y + 2);  wcout << L"| |     __       | |";
@@ -285,5 +284,22 @@ void CDRAW::printLevel(int x, int y, int level) {
 
 
 
+
+}
+
+void CDRAW::printMessageWhenLose() {
+	int xPos = 20;
+	int yPos = 10;
+	for (int i = xPos; i <= xPos + 100; i++) {
+		GotoXY(i, yPos); wcout << L"_";
+		GotoXY(i, yPos + 5); wcout << L"_";
+	}
+	for (int j = yPos; j <= yPos + 5; j++) {
+		GotoXY(xPos, j); wcout << L"|";
+		GotoXY(xPos + 100, j); wcout << L"|";
+	}
+
+	GotoXY(xPos + 5, yPos + 2); wcout << L"YOU LOSE";
+	GotoXY(xPos + 5, yPos + 3); wcout << "PRESS Y TO CONTINUE OR ANY KEY TO EXIT";
 
 }

@@ -50,7 +50,7 @@ void MainProgram(int x) {
 					if (yMove > 22) {
 						yMove--;
 					}
-						
+
 					else
 						yMove = 26;//Neu di len vuot qua lua chon thi di xuong lua chon cuoi
 				}
@@ -73,14 +73,117 @@ void MainProgram(int x) {
 			else if (move == 13 && yMove == 22) {
 				system("cls");
 				cg->startGame();
+<<<<<<< HEAD
 				cg->Control();
+=======
+				cg->resetGame(1);
+
+				thread t1(SubThread);
+				char opt;
+				while (true) {
+					opt = toupper(_getch());
+
+					if (cg->getPeople()->isDead() == false) {
+						if (opt == 27) {
+							cg->exitGame(&t1);
+							break;
+						}
+						else if (opt == 'P') {
+							cg->pauseGame();
+						}
+						else if (opt == 'R') {
+							if (gameIsRunning() == false) {
+								cg->resumeGame();
+								t1.detach();
+								t1 = thread(SubThread);
+							}
+						}
+						else if (opt == 'O') {
+							cg->exitGame(&t1);
+							system("cls");
+							cg->saveGame();
+							system("pause");
+							break;
+						}
+						else if (opt == 'W' || opt == 'A' || opt == 'D' || opt == 'S') {
+							MOVING = opt;
+						}
+					}
+					else {
+						system("cls");
+
+						if (opt == 'Y')
+
+						{
+							system("cls");
+							cg->resetGame(cg->getLevel());
+							t1.detach();
+							t1 = thread(SubThread);
+						}
+						else {
+
+							cg->exitGame(&t1);
+							break;
+						}
+					}
+
+				}
+>>>>>>> 29d5ff3fd9be7ed049b9d6b2fca32adf8d3af1a6
 				cdraw.printAgainHomePage();
 			}
 			//Load Game
 			else if (move == 13 && yMove == 23) {
 				system("cls");
 				cg->loadGame();
+<<<<<<< HEAD
 				cg->Control();
+=======
+				thread t1(SubThread);
+
+				char opt;
+				while (1) {
+					opt = toupper(_getch());
+
+					if (opt == 27) {
+						cg->exitGame(&t1);
+						break;
+					}
+					else if (opt == 'P') {
+						cg->pauseGame();
+					}
+					else if (opt == 'R') {
+						if (gameIsRunning() == false) {
+							cg->resumeGame();
+							t1.detach();
+							t1 = thread(SubThread);
+						}
+					}
+					else if (opt == 'O') {
+						system("cls");
+						cg->exitGame(&t1);
+						cg->saveGame();
+						system("pause");
+						break;
+					}
+					else if (opt == 'W' || opt == 'A' || opt == 'D' || opt == 'S') {
+						MOVING = opt;
+					}
+					if (cg->getPeople()->isDead()) {
+						if (opt == 'Y')
+						{
+							system("cls");
+							cg->resetGame(cg->getLevel());
+							t1.detach();
+							t1 = thread(SubThread);
+						}
+						else {
+
+							cg->exitGame(&t1);
+							break;
+						}
+					}
+				}
+>>>>>>> 29d5ff3fd9be7ed049b9d6b2fca32adf8d3af1a6
 				cdraw.printAgainHomePage();
 			}
 			//Instructions
@@ -99,14 +202,14 @@ void MainProgram(int x) {
 	}
 }
 int main() {
-	
+
 	CDRAW cdraw;
 
 	_setmode(_fileno(stdout), _O_WTEXT);
 	setConsoleWindown(1780, 700);//x = 171, y = 40
 	FixConsoleWindow();
 
-	cdraw.printHomePage(40,6,90,25);
+	cdraw.printHomePage(40, 6, 90, 25);
 	MainProgram(40);
 	return 0;
 }
