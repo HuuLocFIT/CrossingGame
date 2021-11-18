@@ -1,22 +1,22 @@
 ﻿#include"CPEOPLE.h"
 
 void CPEOPLE::Up(int y) {
-	if(mY > 5)
+	if(mY > PEOPLE_BORDER_UP)
 		mY -= y;
 }
 
 void CPEOPLE::Left(int x) {
-	if(mX > 0)
+	if(mX > PEOPLE_BORDER_LEFT)
 		mX -= x;
 }
 
 void CPEOPLE::Right(int x) {
-	if(mX < 104)
+	if(mX < PEOPLE_BORDER_RIGHT)
 		mX += x;
 }
 
 void CPEOPLE::Down(int y) {
-	if(mY < 30)
+	if(mY < PEOPLE_BORDER_DOWN)
 		mY += y;
 }
 

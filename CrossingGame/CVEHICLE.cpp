@@ -26,3 +26,14 @@ void CTRUCK::printSmallTruck(int x, int y) {
 	GotoXY(x, y + 2); wcout << L"│______│__│";
 	GotoXY(x, y + 3); wcout << L" O        O";
 }
+
+void CAMBULANCE::printSmallAmbulance(int x, int y) {
+	GotoXY(x, y);     wcout <<  " _____[]";
+	GotoXY(x, y + 1); wcout << L"│  _|_  \\__  ";
+	GotoXY(x, y + 2); wcout << L"│   |      │";
+	GotoXY(x, y + 3); wcout <<  "`-O------O-'";
+}
+
+void CAMBULANCE::Move(int xAmbulance, int yAmbulance) {
+	this->printSmallAmbulance(xAmbulance, yAmbulance);
+}

@@ -15,8 +15,8 @@
 #define WIDTHROAD 130
 #define HEIGHTROAD 6
 #define LEFTROAD 0
-#define RIGHT_VEHICLE 100
-#define RIGHT_ANIMAL 96
+#define RIGHT_VEHICLE 114
+#define RIGHT_ANIMAL 114
 
 #define YCAR 8
 #define YBAT 14
@@ -32,6 +32,7 @@ class CGAME {
 private:
 	CVEHICLE* axh;
 	CVEHICLE* axt;
+	CVEHICLE* act;
 	CANIMAL* ad;
 	CANIMAL* acs;
 	CPEOPLE* cn;
@@ -68,6 +69,8 @@ public:
 	void updatePosVehicle(CVEHICLE*, int y);
 	void updatePosAnimal(CANIMAL*, int y);
 	bool controlTrafficLight(int x, int y, int mode = 0, int time = 4);
+	void Control();
+	void handleImpact();
 };
 
 void SubThread();

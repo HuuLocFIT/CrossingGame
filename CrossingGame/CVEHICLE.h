@@ -33,3 +33,9 @@ public:
 	void Move(int xTruck, int yTruck);
 	void printSmallTruck(int xTruck,int yTruck);
 };
+
+class CAMBULANCE : public CVEHICLE {
+public:
+	void Move(int xAmbulance, int yAmbulance);
+	void printSmallAmbulance(int xAmbulance, int yAmbulance);
+};
