@@ -6,15 +6,8 @@ void CPEOPLE::Up(int y) {
 }
 
 void CPEOPLE::Left(int x) {
-<<<<<<< HEAD
-	if(mX > PEOPLE_BORDER_LEFT)
-=======
-	
-	if (mX > PEOPLE_BORDER_LEFT) {
->>>>>>> 29d5ff3fd9be7ed049b9d6b2fca32adf8d3af1a6
+	if (mX > PEOPLE_BORDER_LEFT) 
 		mX -= x;
-	}
-		
 	
 }
 

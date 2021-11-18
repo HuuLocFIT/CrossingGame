@@ -11,14 +11,6 @@
 #define PEOPLE_BORDER_UP 5
 #define PEOPLE_BORDER_DOWN 30
 
-
-
-//Bien cua people
-#define PEOPLE_BORDER_RIGHT 125
-#define PEOPLE_BORDER_LEFT 3
-#define PEOPLE_BORDER_UP 5
-#define PEOPLE_BORDER_DOWN 30
-
 class CPEOPLE {
 	int mX, mY;
 	bool mState;
@@ -61,7 +53,6 @@ public:
 	int getY() {
 		return mY;
 	}
-
 
 	void printPeople(int x, int y);
 };

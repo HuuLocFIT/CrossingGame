@@ -27,7 +27,6 @@ void CTRUCK::printSmallTruck(int x, int y) {
 	GotoXY(x, y + 3); wcout << L" O        O";
 }
 
-<<<<<<< HEAD
 void CAMBULANCE::printSmallAmbulance(int x, int y) {
 	GotoXY(x, y);     wcout <<  " _____[]";
 	GotoXY(x, y + 1); wcout << L"│  _|_  \\__  ";
@@ -37,21 +36,22 @@ void CAMBULANCE::printSmallAmbulance(int x, int y) {
 
 void CAMBULANCE::Move(int xAmbulance, int yAmbulance) {
 	this->printSmallAmbulance(xAmbulance, yAmbulance);
-=======
-void CTRUCK::printAmbulance(int x, int y) {
-	SetColor(_RED);
-	GotoXY(x, y);     wcout << L"   _______";
-	GotoXY(x, y + 1); wcout << L" __│ ═╬═  │";
-	GotoXY(x, y + 2); wcout << L"│__│___114│";
-	GotoXY(x, y + 3); wcout << L" O        O";
-	SetColor(_WHITE);
 }
-void CTRUCK::printAmbulance2(int x, int y) {
-	SetColor(_RED);
-	GotoXY(x, y);     wcout << L" ______";
-	GotoXY(x, y + 1); wcout << L"│   ═╬═│__";
-	GotoXY(x, y + 2); wcout << L"│114___│__│";
-	GotoXY(x, y + 3); wcout << L" O        O";
-	SetColor(_WHITE);
->>>>>>> 29d5ff3fd9be7ed049b9d6b2fca32adf8d3af1a6
-}
+
+//
+//void CTRUCK::printAmbulance(int x, int y) {
+//	SetColor(_RED);
+//	GotoXY(x, y);     wcout << L"   _______";
+//	GotoXY(x, y + 1); wcout << L" __│ ═╬═  │";
+//	GotoXY(x, y + 2); wcout << L"│__│___114│";
+//	GotoXY(x, y + 3); wcout << L" O        O";
+//	SetColor(_WHITE);
+//}
+//void CTRUCK::printAmbulance2(int x, int y) {
+//	SetColor(_RED);
+//	GotoXY(x, y);     wcout << L" ______";
+//	GotoXY(x, y + 1); wcout << L"│   ═╬═│__";
+//	GotoXY(x, y + 2); wcout << L"│114___│__│";
+//	GotoXY(x, y + 3); wcout << L" O        O";
+//	SetColor(_WHITE);
+//}
