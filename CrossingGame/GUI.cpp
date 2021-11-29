@@ -303,3 +303,127 @@ void CDRAW::printMessageWhenLose() {
 	GotoXY(xPos + 5, yPos + 3); wcout << "PRESS Y TO CONTINUE OR ANY KEY TO EXIT";
 
 }
+
+void CDRAW::printMessageWhenWin()
+{
+	system("cls");
+	int xPos = 40;
+	int yPos = 0;
+
+	int color = 0;
+	int count = 0;
+
+	while (1) {
+		count++;
+		SetColor(color);
+		if (color > 15)
+			color = 0;
+
+		GotoXY(xPos, yPos); wcout << " ______ _______ _______ _______ ______ _______ _______ _______ _____   _______ _______ _______ _______ _______ ";
+		GotoXY(xPos, yPos + 1); wcout << "|      |       |    |  |     __|   __ \   _   |_     _|   |   |     |_|   _   |_     _|_     _|       |    |  |";
+		GotoXY(xPos, yPos + 2); wcout << "|   ---|   -   |       |    |  |      <       | |   | |   |   |       |       | |   |  _|   |_|   -   |       |";
+		GotoXY(xPos, yPos + 3); wcout << "|______|_______|__|____|_______|___|__|___|___| |___| |_______|_______|___|___| |___| |_______|_______|__|____|";
+		GotoXY(xPos, yPos + 4); wcout << "                                                                                                               ";
+
+		GotoXY(xPos + 23, yPos + 6); wcout << " ___ ___ _______ _______      ________ _______ _______ __ __ __ __ ";
+		GotoXY(xPos + 23, yPos + 7); wcout << "|   |   |       |   |   |    |  |  |  |_     _|    |  |  |  |  |  |";
+		GotoXY(xPos + 23, yPos + 8); wcout << "  \     /|   -   |   |   |    |  |  |  |_|   |_|       |__|__|__|__|";
+		GotoXY(xPos + 23, yPos + 9); wcout << "  |___| |_______|_______|    |________|_______|__|____|__|__|__|__|";
+		GotoXY(xPos + 23, yPos + 10); wcout << "                                                                   ";
+
+		//in bong bong
+		SetColor(_LIGHTYELLOW);
+		GotoXY(xPos + 2, yPos + 12); wcout << "   _..._  ,s$$$s.";
+		GotoXY(xPos + 2, yPos + 13); wcout << " .$$$$$$$s$$ss$$$$,";
+		GotoXY(xPos + 2, yPos + 14); wcout << " $$$sss$$$$s$$$$$$$";
+		GotoXY(xPos + 2, yPos + 15); wcout << " $$ss$$$$$$$$$$$$$$";
+		GotoXY(xPos + 2, yPos + 16); wcout << " '$$$s$$$$$$$$$$$$'";
+		GotoXY(xPos + 2, yPos + 17); wcout << "  '$$$$$$$$$$$$$$'";
+		GotoXY(xPos + 2, yPos + 18); wcout << "    S$$$$$$$$$$$'";
+		GotoXY(xPos + 2, yPos + 19); wcout << "     '$$$$$$$$$'";
+		GotoXY(xPos + 2, yPos + 20); wcout << "       '$$$$$'";
+		GotoXY(xPos + 2, yPos + 21); wcout << "        '$$$'";
+		GotoXY(xPos + 2, yPos + 22); wcout << "          ;";
+		GotoXY(xPos + 2, yPos + 23); wcout << "         ;";
+		GotoXY(xPos + 2, yPos + 24); wcout << "         ;";
+		GotoXY(xPos + 2, yPos + 25); wcout << "         ',";
+		GotoXY(xPos + 2, yPos + 26); wcout << "          ;";
+		GotoXY(xPos + 2, yPos + 27); wcout << "         ,'";
+
+		SetColor(_BLUE);
+		GotoXY(xPos + 78, yPos + 23); wcout << "   _..._  ,s$$$s.";
+		GotoXY(xPos + 78, yPos + 24); wcout << " .$$$$$$$s$$ss$$$$,";
+		GotoXY(xPos + 78, yPos + 25); wcout << " $$$sss$$$$s$$$$$$$";
+		GotoXY(xPos + 78, yPos + 26); wcout << " $$ss$$$$$$$$$$$$$$";
+		GotoXY(xPos + 78, yPos + 27); wcout << " '$$$s$$$$$$$$$$$$'";
+		GotoXY(xPos + 78, yPos + 28); wcout << "  '$$$$$$$$$$$$$$'";
+		GotoXY(xPos + 78, yPos + 29); wcout << "    S$$$$$$$$$$$'";
+		GotoXY(xPos + 78, yPos + 30); wcout << "     '$$$$$$$$$'";
+		GotoXY(xPos + 78, yPos + 31); wcout << "       '$$$$$'";
+		GotoXY(xPos + 78, yPos + 32); wcout << "        '$$$'";
+		GotoXY(xPos + 78, yPos + 33); wcout << "          ;";
+		GotoXY(xPos + 78, yPos + 34); wcout << "         ;";
+		GotoXY(xPos + 78, yPos + 35); wcout << "         ;";
+		GotoXY(xPos + 78, yPos + 36); wcout << "         ',";
+		GotoXY(xPos + 78, yPos + 37); wcout << "          ;";
+		GotoXY(xPos + 78, yPos + 38); wcout << "         ,'";
+
+		SetColor(_RED);
+		GotoXY(xPos + 92, yPos + 5); wcout << "   _..._  ,s$$$s.";
+		GotoXY(xPos + 92, yPos + 6); wcout << " .$$$$$$$s$$ss$$$$,";
+		GotoXY(xPos + 92, yPos + 7); wcout << " $$$sss$$$$s$$$$$$$";
+		GotoXY(xPos + 92, yPos + 8); wcout << " $$ss$$$$$$$$$$$$$$";
+		GotoXY(xPos + 92, yPos + 9); wcout << " '$$$s$$$$$$$$$$$$'";
+		GotoXY(xPos + 92, yPos + 10); wcout << "  '$$$$$$$$$$$$$$'";
+		GotoXY(xPos + 92, yPos + 11); wcout << "    S$$$$$$$$$$$'";
+		GotoXY(xPos + 92, yPos + 12); wcout << "     '$$$$$$$$$'";
+		GotoXY(xPos + 92, yPos + 13); wcout << "       '$$$$$'";
+		GotoXY(xPos + 92, yPos + 14); wcout << "        '$$$'";
+		GotoXY(xPos + 92, yPos + 15); wcout << "          ;";
+		GotoXY(xPos + 92, yPos + 16); wcout << "         ;";
+		GotoXY(xPos + 92, yPos + 17); wcout << "         ;";
+		GotoXY(xPos + 92, yPos + 18); wcout << "         ',";
+		GotoXY(xPos + 92, yPos + 19); wcout << "          ;";
+		GotoXY(xPos + 92, yPos + 20); wcout << "         ,'";
+
+
+		//in hinh nguoi
+		SetColor(15);
+		GotoXY(xPos + 30, yPos + 12); wcout << "     ,;``',";
+		GotoXY(xPos + 30, yPos + 13); wcout << "    ;      |";
+		GotoXY(xPos + 30, yPos + 14); wcout << "    ;;. ;;,'";
+		GotoXY(xPos + 30, yPos + 15); wcout << "     `'' - '7'.IT'S TIME TO CELEBRATE!!   _  /";
+		GotoXY(xPos + 30, yPos + 16); wcout << "         |' >.                         .'` |\  -";
+		GotoXY(xPos + 30, yPos + 17); wcout << "         | /  >.                   _\ /   /  |  -";
+		GotoXY(xPos + 30, yPos + 18); wcout << "         '/  / ,`.  __..----.       .'  .'  /  _";
+		GotoXY(xPos + 30, yPos + 19); wcout << "         ;  / /_.-'          \     /_.-`_.-'  \ ";
+		GotoXY(xPos + 30, yPos + 20); wcout << "          ;' .'  '`           |  - `-.-'";
+		GotoXY(xPos + 30, yPos + 21); wcout << "          |_/                .'   /   \_\_";
+		GotoXY(xPos + 30, yPos + 22); wcout << "          _|  |_    .____.-'`         / __)`\ ";
+		GotoXY(xPos + 30, yPos + 23); wcout << "         ( `  /\`'-...__.'  \        | '\(_.'|";
+		GotoXY(xPos + 30, yPos + 24); wcout << "          `-\   \ `-'-'-'|   `.      -.  \(_./";
+		GotoXY(xPos + 30, yPos + 25); wcout << "             \   \.-.-.  \     \___ /  >-'\_\ ";
+		GotoXY(xPos + 30, yPos + 26); wcout << "              \   \  \ \  `/\  |_  '` /";
+		GotoXY(xPos + 30, yPos + 27); wcout << "           _./\    \  ' | /    /_\ .-`";
+		GotoXY(xPos + 30, yPos + 28); wcout << "         .' _.\'.   '.__.'    /`\`'";
+		GotoXY(xPos + 30, yPos + 29); wcout << "  .-.---'\_/   `.`'-..____   ;   \ ";
+		GotoXY(xPos + 30, yPos + 30); wcout << " / / .--. |,     `'-._   /`'.|    |";
+		GotoXY(xPos + 30, yPos + 30); wcout << " `| /-' / / \         `.'    \   _/";
+		GotoXY(xPos + 30, yPos + 31); wcout << "  '-'  '-' \ `-._            _,-' |";
+		GotoXY(xPos + 30, yPos + 32); wcout << "            \    `'''----''''    /";
+		GotoXY(xPos + 30, yPos + 33); wcout << "             >                _.'";
+		GotoXY(xPos + 30, yPos + 34); wcout << "            / /`'-.._____..--'\ \ ";
+		GotoXY(xPos + 30, yPos + 35); wcout << "           < \                / /";
+		GotoXY(xPos + 30, yPos + 36); wcout << "            \ `.           .'  |___ mx";
+		GotoXY(xPos + 30, yPos + 37); wcout << "          ___\_ `.        /__.-'   ``--..";
+		GotoXY(xPos + 30, yPos + 38); wcout << "   ..--''`     `-.\      (___/`'--.._____)";
+		GotoXY(xPos + 30, yPos + 39); wcout << "  (_____...--'`\___)";
+
+
+		color++;
+		Sleep(1);
+		if (count == 70)//het nhac thi tat thong bao chien thang
+			break;
+	}
+
+}

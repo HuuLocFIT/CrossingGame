@@ -27,3 +27,19 @@ void CBAT::printSmallBat(int x, int y) {
 	GotoXY(x, y + 2); wcout << " )__   __(";
 	GotoXY(x, y + 3); wcout << "    `-'";
 }
+
+void  CANIMAL::Tell()
+{
+	PlaySound(L"", NULL, SND_ASYNC && SND_LOOP);
+
+}
+
+void CCROCODILE::Tell()
+{
+	PlaySound(L"crocodile5.wav", NULL, SND_ASYNC && SND_LOOP);
+}
+
+void CBAT::Tell()
+{
+	PlaySound(L"batsounds1.wav", NULL, SND_ASYNC && SND_LOOP);
+}
