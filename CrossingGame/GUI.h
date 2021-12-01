@@ -46,6 +46,7 @@ public:
 	void printBox(int x, int y, int w, int h);
 	void printLevel(int x, int y, int level);
 	void printMessageWhenLose();
+	void printMessageWhenWin();
 };
 
 

@@ -1,5 +1,4 @@
 ﻿#include"CGAME.h"
-
 //Luong chuong trinh
 //PlayGame -> While (StartGame, Resest Game, Update Pos)
 
@@ -101,6 +100,8 @@ void CGAME::resetGame(int level) {
 	//Khoi tao danh sach con doi
 	ad = new CBAT[maxObjectInLevel];
 	for (int i = 0; i < maxObjectInLevel; i++) {
+		//Tell la de phat am thanh cua con doi
+		//ad[i].Tell();
 		ad[i].setX(RIGHT_ANIMAL);
 		ad[i].setY(YBAT);
 	}
@@ -108,13 +109,14 @@ void CGAME::resetGame(int level) {
 	//Khoi tao danh sach con ca sau
 	acs = new CCROCODILE[maxObjectInLevel];
 	for (int i = 0; i < maxObjectInLevel; i++) {
+		//Tell la de phat am thanh cua ca sau
+		//acs[i].Tell();
 		acs[i].setX(RIGHT_ANIMAL);
 		acs[i].setY(YCROC);
 	}
 
 	cn = new CPEOPLE();
 }
-
 //Vẽ đường
 void CGAME::drawGame() {
 	CDRAW cdraw;
@@ -274,7 +276,7 @@ void CGAME::Control() {
 				cg->startGame();
 				t1 = thread(SubThread);
 			}
-			else {
+			else if (opt == 'N') {
 				cg->exitGame(&t1);
 				break;
 			}
@@ -327,7 +329,7 @@ void CGAME::updatePosPeople(char MOVING) {
 		cn->Right(3);//Qua phải
 	}
 
-	printPeople(cn->getX() , cn->getY());//Bắt đầu in người
+	printPeople(cn->getX(), cn->getY());//Bắt đầu in người
 }
 
 void CGAME::handleImpact() {
@@ -339,6 +341,10 @@ void CGAME::handleImpact() {
 	printPeople(cn->getX(), cn->getY());
 
 	//Ve xe cuu thuong cho nguoi choi khi bi chet
+	//tat am thanh truoc do
+	PlaySound(NULL, NULL, SND_FILENAME);
+	//am thanh cua xe cuu thuong
+	PlaySound(L"AMBsiren.wav", NULL, SND_FILENAME || SND_LOOP);
 	act = new CAMBULANCE();
 	act->setX(2);
 	int x;
@@ -349,7 +355,6 @@ void CGAME::handleImpact() {
 		act->setX(x + 2);
 		Sleep(100);
 	}
-
 	//In hop thoai hoi nguoi choi co muon choi tiep khong?
 	system("cls");
 	cdraw.printBox(67, 18, 36, 3);
@@ -362,9 +367,9 @@ void CGAME::PlayGame() {
 		CDRAW cdraw;
 		cdraw.printLevel(144, 1, cg->getLevel());
 		//cg->DebugOutput(178);
- 
+
 		//Kiểm tra tình trạng người chơi còn sống không ?
-		if(!cg->getPeople()->isDead())
+		if (!cg->getPeople()->isDead())
 			cg->updatePosPeople(MOVING);
 		else {
 			IS_RUNNING = false;
@@ -382,6 +387,9 @@ void CGAME::PlayGame() {
 				cg->level++;
 			}
 			else if (cg->getLevel() >= 5) {
+				//mo am thanh chien thang
+				PlaySound(L"winning.wav", NULL, SND_FILENAME || SND_LOOP);
+				cdraw.printMessageWhenWin();
 				cg->level = 1;
 			}
 
@@ -410,7 +418,7 @@ void CGAME::PlayGame() {
 		if (cg->controlTrafficLight(133, 7, 1)) {
 			cg->updatePosVehicle(axt, YTRUCK);
 		}
-	
+
 		cg->drawGame();
 		Sleep(1);
 
@@ -531,6 +539,7 @@ void CGAME::loadGame() {
 
 		index = 0;
 		for (int i = 0; i < numObjects * 2; i += 2) {
+			ad[index].Tell();
 			ad[index].setX(tempBats[i]);
 			ad[index].setY(tempBats[i + 1]);
 			index++;
@@ -563,6 +572,7 @@ void CGAME::loadGame() {
 
 		index = 0;
 		for (int i = 0; i < numObjects * 2; i += 2) {
+			acs[index].Tell();
 			acs[index].setX(tempCros[i]);
 			acs[index].setY(tempCros[i + 1]);
 			index++;
@@ -592,12 +602,15 @@ void CGAME::loadGame() {
 void CGAME::exitGame(thread* t1) {
 	IS_RUNNING = false;
 	t1->join();//Kết thúc tiểu trình
+	//tat am thanh
+	PlaySound(NULL, NULL, SND_FILENAME);
 }
 
 //Tiểu trình phụ in các đối tượng trong trò chơi
 void SubThread() {
 	cg->PlayGame();
 }
+//Tiểu trình tạo ra âm thanh cho thú
 
 bool CGAME::controlTrafficLight(int x, int y, int mode, int timeZ) {
 	srand(time(0));

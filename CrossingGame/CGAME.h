@@ -62,6 +62,7 @@ public:
 	void resetGame(int);
 	void exitGame(thread*);
 	void PlayGame();
+	void Sound();
 	void startGame();
 	void pauseGame();
 	void resumeGame();
@@ -77,6 +78,7 @@ public:
 };
 
 void SubThread();
+void SoundThread();
 //Ham phu lay ten tap tin de save game
 string takeFile();
 //Ham phu de kiem tra game co dang chay => Tranh TH nguoi choi bam resume game trong khi game da chay roi
