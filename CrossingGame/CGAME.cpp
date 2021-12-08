@@ -240,7 +240,7 @@ void CGAME::Control() {
 	thread t1(SubThread);
 	char opt;
 	while (true) {
-		opt = toupper(_getch());
+		opt = _getch();
 
 		if (cg->getPeople()->isDead() == false) {
 			if (opt == 27) {
@@ -248,35 +248,35 @@ void CGAME::Control() {
 				cg->setLevel(1);
 				break;
 			}
-			else if (opt == 'P') {
+			else if (opt == 'p') {
 				cg->pauseGame();
 			}
-			else if (opt == 'R') {
+			else if (opt == 'r') {
 				if (IS_RUNNING == false) {
 					cg->resumeGame();
 					t1.detach();
 					t1 = thread(SubThread);
 				}
 			}
-			else if (opt == 'O') {
+			else if (opt == 'o') {
 				cg->exitGame(&t1);
 				system("cls");
 				cg->saveGame();
 				system("pause");
 				break;
 			}
-			else if (opt == 'W' || opt == 'A' || opt == 'D' || opt == 'S') {
+			else if (opt == 'w' || opt == 'a' || opt == 'd' || opt == 's' || opt == _UPkey || opt == _DOWNkey || opt == _LEFTkey || opt == _RIGHTkey) {
 				MOVING = opt;
 			}
 		}
 		else {
-			if (opt == 'Y')
+			if (opt == 'y')
 			{
 				cg->exitGame(&t1);
 				cg->startGame();
 				t1 = thread(SubThread);
 			}
-			else if (opt == 'N') {
+			else if (opt == 'n') {
 				cg->exitGame(&t1);
 				break;
 			}
@@ -315,17 +315,17 @@ void CGAME::updatePosPeople(char MOVING) {
 	int xOld = cn->getX();
 	int yOld = cn->getY();
 	DeleteImageOld(xOld, yOld, 4, 3);
-	if (MOVING == 'W' || MOVING == _UPkey) {
+	if (MOVING == 'w' || MOVING == _UPkey) {
 		cn->Up(6);//Bước đi lên
 	}
-	else if (MOVING == 'S' || MOVING == _DOWNkey) {
+	else if (MOVING == 's' || MOVING == _DOWNkey) {
 		cn->Down(6);//Bước đi xuống
 	}
-	else if (MOVING == 'A' || MOVING == _LEFTkey) {
+	else if (MOVING == 'a' || MOVING == _LEFTkey) {
 
 		cn->Left(3);//Qua trái
 	}
-	else if (MOVING == 'D' || MOVING == _RIGHTkey) {
+	else if (MOVING == 'd' || MOVING == _RIGHTkey) {
 		cn->Right(3);//Qua phải
 	}
 
