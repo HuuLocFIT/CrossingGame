@@ -65,9 +65,16 @@ void MainProgram(int x) {
 			//Exit
 			else if (move == 13 && yMove == 26) {
 				system("cls");
-				cdraw.printThankYou(40, 15);
-				system("cls");
-				break;
+				cdraw.printBox(67, 18, 40, 3);
+				GotoXY(68, 19); wcout << "     Are you sure you want to Exit?";
+				GotoXY(68, 20); wcout << " Yes(Press: Y)       No(Press any key)";
+				char choice = _getch();
+				if (toupper(choice) == 'Y'){
+					cdraw.printThankYou(40, 15);
+					system("cls");
+					break;
+				}
+				else cdraw.printAgainHomePage();
 			}
 			//Start Game
 			else if (move == 13 && yMove == 22) {
@@ -79,8 +86,9 @@ void MainProgram(int x) {
 			//Load Game
 			else if (move == 13 && yMove == 23) {
 				system("cls");
-				cg->loadGame();
-				cg->Control();
+				bool loadFile = cg->loadGame();
+				if(loadFile == true)
+					cg->Control();
 				cdraw.printAgainHomePage();
 			}
 			//Instructions

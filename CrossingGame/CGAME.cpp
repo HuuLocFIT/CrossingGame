@@ -240,43 +240,45 @@ void CGAME::Control() {
 	thread t1(SubThread);
 	char opt;
 	while (true) {
-		opt = _getch();
-
+		opt = toupper(_getch());
 		if (cg->getPeople()->isDead() == false) {
 			if (opt == 27) {
 				cg->exitGame(&t1);
 				cg->setLevel(1);
-				break;
+				break; 
 			}
-			else if (opt == 'p') {
+			else if (GetAsyncKeyState(VK_DOWN)) {
+				MOVING = _DOWNkey;
+			}
+			else if (opt == 'P') {
 				cg->pauseGame();
 			}
-			else if (opt == 'r') {
+			else if (opt == 'R') {
 				if (IS_RUNNING == false) {
 					cg->resumeGame();
 					t1.detach();
 					t1 = thread(SubThread);
 				}
 			}
-			else if (opt == 'o') {
+			else if (opt == 'O') {
 				cg->exitGame(&t1);
 				system("cls");
 				cg->saveGame();
 				system("pause");
 				break;
 			}
-			else if (opt == 'w' || opt == 'a' || opt == 'd' || opt == 's' || opt == _UPkey || opt == _DOWNkey || opt == _LEFTkey || opt == _RIGHTkey) {
+			else if (opt == 'W' || opt == 'A' || opt == 'D' || opt == 'S' || opt == _UPkey || opt == _LEFTkey || opt == _RIGHTkey) {
 				MOVING = opt;
 			}
 		}
 		else {
-			if (opt == 'y')
+			if (opt == 'Y')
 			{
 				cg->exitGame(&t1);
 				cg->startGame();
 				t1 = thread(SubThread);
 			}
-			else if (opt == 'n') {
+			else if (opt == 'N') {
 				cg->exitGame(&t1);
 				break;
 			}
@@ -315,17 +317,17 @@ void CGAME::updatePosPeople(char MOVING) {
 	int xOld = cn->getX();
 	int yOld = cn->getY();
 	DeleteImageOld(xOld, yOld, 4, 3);
-	if (MOVING == 'w' || MOVING == _UPkey) {
+	if (MOVING == 'W' || MOVING == _UPkey) {
 		cn->Up(6);//Bước đi lên
 	}
-	else if (MOVING == 's' || MOVING == _DOWNkey) {
+	else if (MOVING == 'S' || MOVING == _DOWNkey) {
 		cn->Down(6);//Bước đi xuống
 	}
-	else if (MOVING == 'a' || MOVING == _LEFTkey) {
+	else if (MOVING == 'A' || MOVING == _LEFTkey) {
 
 		cn->Left(3);//Qua trái
 	}
-	else if (MOVING == 'd' || MOVING == _RIGHTkey) {
+	else if (MOVING == 'D' || MOVING == _RIGHTkey) {
 		cn->Right(3);//Qua phải
 	}
 
@@ -491,110 +493,116 @@ void CGAME::saveGame() {
 
 }
 
-void CGAME::loadGame() {
+bool CGAME::loadGame() {
+	while (true) {
+		system("cls");
+		string file = takeFile();
+		ifstream fin;
+		fin.open(file, ios::in);
 
-	string file = takeFile();
-	ifstream fin;
-	fin.open(file, ios::in);
-
-	if (fin.fail()) {
-		wcout << "Can not open the file!";
-	}
-	else {
-		//Lay so luong object trong mot game
-
-
-		int numObjects;
-		fin >> numObjects; this->setNumbetObjects(numObjects);
-
-		//Khởi tạo các đối tượng để lưu dữ liệu 
-		axh = new CCAR[numObjects];
-		axt = new CTRUCK[numObjects];
-		ad = new CBAT[numObjects];
-		acs = new CCROCODILE[numObjects];
-		cn = new CPEOPLE();
-
-		//Lay vi tri danh sach cac xe hoi
-		int* tempCars = new int[numObjects * 2];
-		for (int i = 0; i < numObjects * 2; i += 2) {
-			fin >> tempCars[i];
-			fin >> tempCars[i + 1];
+		if (fin.fail()) {
+			wcout << "--> Can not open the file! Press any key to try again or Esc to Exit" << endl;
+			char press = _getch();
+			if (press == 27)
+				return false;
 		}
+		else {
+			//Lay so luong object trong mot game
 
-		int index = 0;
-		for (int i = 0; i < numObjects * 2; i += 2) {
-			axh[index].setX(tempCars[i]);
-			axh[index].setY(tempCars[i + 1]);
-			index++;
+
+			int numObjects;
+			fin >> numObjects; this->setNumbetObjects(numObjects);
+
+			//Khởi tạo các đối tượng để lưu dữ liệu 
+			axh = new CCAR[numObjects];
+			axt = new CTRUCK[numObjects];
+			ad = new CBAT[numObjects];
+			acs = new CCROCODILE[numObjects];
+			cn = new CPEOPLE();
+
+			//Lay vi tri danh sach cac xe hoi
+			int* tempCars = new int[numObjects * 2];
+			for (int i = 0; i < numObjects * 2; i += 2) {
+				fin >> tempCars[i];
+				fin >> tempCars[i + 1];
+			}
+
+			int index = 0;
+			for (int i = 0; i < numObjects * 2; i += 2) {
+				axh[index].setX(tempCars[i]);
+				axh[index].setY(tempCars[i + 1]);
+				index++;
+			}
+
+			delete[]tempCars; tempCars = NULL;
+
+			//Lay danh sach cac con doi
+			int* tempBats = new int[numObjects * 2];
+			for (int i = 0; i < numObjects * 2; i += 2) {
+				fin >> tempBats[i];
+				fin >> tempBats[i + 1];
+			}
+
+			index = 0;
+			for (int i = 0; i < numObjects * 2; i += 2) {
+				ad[index].Tell();
+				ad[index].setX(tempBats[i]);
+				ad[index].setY(tempBats[i + 1]);
+				index++;
+			}
+
+			delete[]tempBats; tempBats = NULL;
+
+			//Lay danh sach xe tai
+			int* tempTrucks = new int[numObjects * 2];
+			for (int i = 0; i < numObjects * 2; i += 2) {
+				fin >> tempTrucks[i];
+				fin >> tempTrucks[i + 1];
+			}
+
+			index = 0;
+			for (int i = 0; i < numObjects * 2; i += 2) {
+				axt[index].setX(tempTrucks[i]);
+				axt[index].setY(tempTrucks[i + 1]);
+				index++;
+			}
+
+			delete[]tempTrucks; tempTrucks = NULL;
+
+			//Lay danh sach cac con ca sau
+			int* tempCros = new int[numObjects * 2];
+			for (int i = 0; i < numObjects * 2; i += 2) {
+				fin >> tempCros[i];
+				fin >> tempCros[i + 1];
+			}
+
+			index = 0;
+			for (int i = 0; i < numObjects * 2; i += 2) {
+				acs[index].Tell();
+				acs[index].setX(tempCros[i]);
+				acs[index].setY(tempCros[i + 1]);
+				index++;
+			}
+
+			delete[]tempCros; tempCros = NULL;
+
+			int xPeople, yPeople;
+			fin >> xPeople >> yPeople;
+
+			cn->setX(xPeople); cn->setY(yPeople);
+			bool state;
+			fin >> state;
+			cn->setMState(state);
+
+			int level;
+			fin >> level;
+			cg->setLevel(level);
+
+			IS_RUNNING = true;
+
+			fin.close();
+			return true;
 		}
-
-		delete[]tempCars; tempCars = NULL;
-
-		//Lay danh sach cac con doi
-		int* tempBats = new int[numObjects * 2];
-		for (int i = 0; i < numObjects * 2; i += 2) {
-			fin >> tempBats[i];
-			fin >> tempBats[i + 1];
-		}
-
-		index = 0;
-		for (int i = 0; i < numObjects * 2; i += 2) {
-			ad[index].Tell();
-			ad[index].setX(tempBats[i]);
-			ad[index].setY(tempBats[i + 1]);
-			index++;
-		}
-
-		delete[]tempBats; tempBats = NULL;
-
-		//Lay danh sach xe tai
-		int* tempTrucks = new int[numObjects * 2];
-		for (int i = 0; i < numObjects * 2; i += 2) {
-			fin >> tempTrucks[i];
-			fin >> tempTrucks[i + 1];
-		}
-
-		index = 0;
-		for (int i = 0; i < numObjects * 2; i += 2) {
-			axt[index].setX(tempTrucks[i]);
-			axt[index].setY(tempTrucks[i + 1]);
-			index++;
-		}
-
-		delete[]tempTrucks; tempTrucks = NULL;
-
-		//Lay danh sach cac con ca sau
-		int* tempCros = new int[numObjects * 2];
-		for (int i = 0; i < numObjects * 2; i += 2) {
-			fin >> tempCros[i];
-			fin >> tempCros[i + 1];
-		}
-
-		index = 0;
-		for (int i = 0; i < numObjects * 2; i += 2) {
-			acs[index].Tell();
-			acs[index].setX(tempCros[i]);
-			acs[index].setY(tempCros[i + 1]);
-			index++;
-		}
-
-		delete[]tempCros; tempCros = NULL;
-
-		int xPeople, yPeople;
-		fin >> xPeople >> yPeople;
-
-		cn->setX(xPeople); cn->setY(yPeople);
-		bool state;
-		fin >> state;
-		cn->setMState(state);
-
-		int level;
-		fin >> level;
-		cg->setLevel(level);
-
-		IS_RUNNING = true;
-
-		fin.close();
 	}
 }
 

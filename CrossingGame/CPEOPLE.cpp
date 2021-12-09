@@ -36,7 +36,7 @@ CPEOPLE::~CPEOPLE() {
 //Kiểm tra có va chạm vào xe không?
 bool CPEOPLE::isImpact(const CVEHICLE* xe, int n) {
 	for (int i = 0; i < n; i++) {
-		if (mX >= xe[i].getX() && mX <= (xe[i].getX() + 11) && (mY-1) == xe[0].getY() ) {
+		if (mX >= xe[i].getX() - 6 && mX <= (xe[i].getX() + 9) && (mY-1) == xe[0].getY() ) {
 			this->mState = false;
 			return true;
 		}
@@ -48,7 +48,7 @@ bool CPEOPLE::isImpact(const CVEHICLE* xe, int n) {
 //Có va chạm vào động vật không
 bool CPEOPLE::isImpact(const CANIMAL* dv, int n) {
 	for (int i = 0; i < n; i++) {
-		if (mX >= dv[i].getX() && mX <= (dv[i].getX() + 11) && (mY - 1) == dv[0].getY() ) {
+		if (mX >= dv[i].getX() - 1.8 && mX <= (dv[i].getX() + 11) && (mY - 1) == dv[0].getY() ) {
 			this->mState = false;
 			return true;
 		}

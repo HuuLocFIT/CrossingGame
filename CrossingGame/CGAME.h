@@ -67,7 +67,7 @@ public:
 	void pauseGame();
 	void resumeGame();
 	void saveGame();
-	void loadGame();
+	bool loadGame();
 	void DebugOutput(int x);
 	void updatePosPeople(char);
 	void updatePosVehicle(CVEHICLE*, int y);
