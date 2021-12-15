@@ -205,15 +205,6 @@ void CDRAW::printBanner(int x, int y) {
 
 }
 
-
-
-
-
-void printPeople(int x, int y) {
-	GotoXY(x, y);	  wcout << " O";
-	GotoXY(x, y + 1); wcout << "/|\\";
-	GotoXY(x, y + 2); wcout << "/ \\";
-}
 void MusicCarLoading() {
 	PlaySound(TEXT("smb_world_clear.wav"), NULL, SND_SYNC);
 }
@@ -233,10 +224,6 @@ void CDRAW::printLevel(int x, int y, int level) {
 	GotoXY(x, y + 8);  wcout << L"| |              | |";
 	GotoXY(x, y + 9);  wcout << L"| '--------------' |";
 	GotoXY(x, y + 10); wcout << L" '----------------' ";
-	SetColor(_LIGHTGREEN);
-	GotoXY(x - 2, y + 12); wcout << L"<!-- - - - - - - - - -->";
-	GotoXY(x - 2, y + 13); wcout << L"<!--Your score:      -->";
-	GotoXY(x - 2, y + 14); wcout << L"<!-- - - - - - - - - -->";
 	SetColor(_LIGHTBLUE);
 	if (level == 1) {
 		GotoXY(x, y + 2);  wcout << L"| |     __       | |";
@@ -281,9 +268,6 @@ void CDRAW::printLevel(int x, int y, int level) {
 	}
 
 	SetColor(_WHITE);
-
-
-
 
 }
 
@@ -422,7 +406,7 @@ void CDRAW::printMessageWhenWin()
 
 		color++;
 		Sleep(1);
-		if (count == 70)//het nhac thi tat thong bao chien thang
+		if (count == 30)//het nhac thi tat thong bao chien thang
 			break;
 	}
 

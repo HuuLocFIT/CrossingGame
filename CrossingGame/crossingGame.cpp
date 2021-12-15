@@ -87,8 +87,10 @@ void MainProgram(int x) {
 			else if (move == 13 && yMove == 23) {
 				system("cls");
 				bool loadFile = cg->loadGame();
-				if(loadFile == true)
+				if (loadFile == true) {
+					system("cls");
 					cg->Control();
+				}
 				cdraw.printAgainHomePage();
 			}
 			//Instructions
