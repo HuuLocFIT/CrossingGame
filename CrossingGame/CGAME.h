@@ -8,6 +8,7 @@
 #include<thread>
 #include<fstream>
 #include<string>
+#include<sstream>
 
 
 
@@ -80,6 +81,6 @@ public:
 void SubThread();
 void SoundThread();
 //Ham phu lay ten tap tin de save game
-string takeFile();
+string takeFile(string &headerFile, int type);
 //Ham phu de kiem tra game co dang chay => Tranh TH nguoi choi bam resume game trong khi game da chay roi
 bool gameIsRunning();

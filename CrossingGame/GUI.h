@@ -49,21 +49,5 @@ public:
 	void printMessageWhenWin();
 };
 
-
-
-
-void printSmallCarLTR(int x, int y);
-
-void printSmallTruck(int x, int y);
-
-void printSmallCrocodile(int x, int y);
-
-void printSmallBat(int x, int y);
-
-void printPeople(int x, int y);
-
 void MusicCarLoading();
-
-
-
 void DeleteImageOld(int x, int y, int w, int h);

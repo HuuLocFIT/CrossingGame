@@ -331,7 +331,7 @@ void CGAME::updatePosPeople(char MOVING) {
 		cn->Right(3);//Qua phải
 	}
 
-	printPeople(cn->getX(), cn->getY());//Bắt đầu in người
+	cn->printPeople(cn->getX(), cn->getY());//Bắt đầu in người
 }
 
 void CGAME::handleImpact() {
@@ -340,7 +340,7 @@ void CGAME::handleImpact() {
 	//Ve lai game ngoai tru cac xe va con vat
 	cg->drawGame();
 	cdraw.printLevel(144, 1, cg->getLevel());
-	printPeople(cn->getX(), cn->getY());
+	cn->printPeople(cn->getX(), cn->getY());
 
 	//Ve xe cuu thuong cho nguoi choi khi bi chet
 	//tat am thanh truoc do
@@ -401,13 +401,6 @@ void CGAME::PlayGame() {
 			continue;
 		}
 
-		/*if (cg->getPeople()->isDead()) {
-			system("cls");
-			cdraw.printMessageWhenLose();
-			break;
-		}*/
-
-
 		if (cg->controlTrafficLight(133, 13, 0)) {
 			cg->updatePosAnimal(ad, YBAT);
 		}
@@ -424,25 +417,34 @@ void CGAME::PlayGame() {
 		cg->drawGame();
 		Sleep(1);
 
-		/*if (cg->getLevel() == 1)
-			Sleep(100);
-		else if (cg->getLevel() == 2) {
-			Sleep(80);
-		}
-		else if (cg->getLevel() == 3) {
-			Sleep(50);
-		}
-		else if (cg->getLevel() == 4) {
-			Sleep(30);
-		}*/
-
 	}
 }
 
 //Hàm lấy tên file để lưu dữ liệu
-string takeFile() {
+string takeFile(string &headFile, int type) {
+	if (type == 1) {
+		wifstream readFile;
+		readFile.open("History.txt", ios::in);
+
+		int X = 3;
+		wstring nameFile;
+		if (readFile) {
+			GotoXY(47, X);
+			wcout << "RECOMMENDED:" << endl;
+			while (!readFile.eof()) {
+				getline(readFile, nameFile);
+				GotoXY(60, ++X);
+				wcout << nameFile << endl;
+			}
+			readFile.close();
+		}
+		else {
+			wcout << "Failed" << endl;
+			EXIT_FAILURE;
+		}
+	}
 	string tailFile = ".txt";
-	string headFile;
+	GotoXY(30, 0);
 	wcout << "Enter a file's name: ";
 	getline(cin, headFile);
 	string file = headFile + tailFile;
@@ -450,7 +452,13 @@ string takeFile() {
 }
 
 void CGAME::saveGame() {
-	string file = takeFile();
+	string headFile;
+	string file = takeFile(headFile, 0);
+	ofstream fHistory;
+	fHistory.open("History.txt", ios::app);
+	fHistory << headFile << "\n";
+
+	fHistory.close();
 	ofstream fout;
 	fout.open(file, ios::out);
 
@@ -496,7 +504,8 @@ void CGAME::saveGame() {
 bool CGAME::loadGame() {
 	while (true) {
 		system("cls");
-		string file = takeFile();
+		string headFile;
+		string file = takeFile(headFile, 1);
 		ifstream fin;
 		fin.open(file, ios::in);
 
@@ -627,9 +636,6 @@ bool CGAME::controlTrafficLight(int x, int y, int mode, int timeZ) {
 	double secondsToDelay = 2;
 	deltaTime = (((clock()) / CLOCKS_PER_SEC / timeZ % 2) + (mode)) % 2;
 
-	/*GotoXY(138, 22); wcout << deltaTime;*/
-
-	GotoXY(138, 22); wcout << deltaTime;
 	int i = deltaTime;
 
 	CDRAW cdraw;
